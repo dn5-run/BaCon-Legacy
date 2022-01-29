@@ -41,6 +41,7 @@ export const Controller: React.VFC<ServerProps> = ({ server }) => {
       >
         <Button
           isLoading={startIsLoading}
+          disabled={startIsLoading}
           onClick={async () => {
             setStartIsLoading(true)
             await server.start()
@@ -51,6 +52,7 @@ export const Controller: React.VFC<ServerProps> = ({ server }) => {
         </Button>
         <Button
           isLoading={stopIsLoading}
+          disabled={stopIsLoading}
           onClick={async () => {
             setStopIsLoading(true)
             await server.stop()
@@ -61,6 +63,7 @@ export const Controller: React.VFC<ServerProps> = ({ server }) => {
         </Button>
         <Button
           isLoading={restartIsLoading}
+          disabled={restartIsLoading}
           onClick={async () => {
             setRestartIsLoading(true)
             await server.restart()
