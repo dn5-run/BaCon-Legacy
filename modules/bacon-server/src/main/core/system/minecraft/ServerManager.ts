@@ -30,7 +30,7 @@ export class ServerManager {
 
     public createServer(config: MinecraftServerType) {
         if (this.getServer(config.name)) throw new Error(`Server ${config.name} already exists`)
-        if (!serverSoftManager.getSofts().includes(config.soft)) throw new Error(`Server soft ${config.soft} does not exists`)
+        if (!serverSoftManager.getSofts().find(s => s.name === config.soft.name)) throw new Error(`Server soft ${config.soft} does not exists`)
         if (config.name.match(/#/)) throw new Error(`Server name ${config.name} contains characters that cannot be used.`)
         const server = new Server(config)
         this.servers.push(server)

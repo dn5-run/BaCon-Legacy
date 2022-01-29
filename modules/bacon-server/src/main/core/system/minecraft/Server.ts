@@ -1,19 +1,22 @@
-import { MinecraftServerType, ServerProperties, ServerSoft, ServerStatus, ServerType } from 'bacon-types'
-import { ChildProcess, spawn } from 'child_process'
-import EventEmitter from 'events'
-import fs from 'fs-extra'
-import os from 'os'
-import path from 'path'
-import pidUsage from 'pidusage'
-import StrictEventEmitter from 'strict-event-emitter-types'
+import { MinecraftServerType, ServerProperties, ServerSoft, ServerStatus, ServerType } from 'bacon-types';
+import { ChildProcess, spawn } from 'child_process';
+import EventEmitter from 'events';
+import fs from 'fs-extra';
+import os from 'os';
+import path from 'path';
+import pidUsage from 'pidusage';
+import StrictEventEmitter from 'strict-event-emitter-types';
 
-import { Constants } from '../../../Constants'
-import { Logger } from '../../../util/Logger'
-import { javaManager } from '../Independent/Java'
-import { serverSoftManager } from '../Independent/ServerSoftManager'
-import { statusEmitter } from '../Independent/StatusEmitter'
-import { Plugin } from './Plugin'
-import { parseServerProperties, stringifyServerProperties } from './PropertiesParser'
+
+
+import { Constants } from '../../../Constants';
+import { Logger } from '../../../util/Logger';
+import { javaManager } from '../Independent/Java';
+import { serverSoftManager } from '../Independent/ServerSoftManager';
+import { statusEmitter } from '../Independent/StatusEmitter';
+import { Plugin } from './Plugin';
+import { parseServerProperties, stringifyServerProperties } from './PropertiesParser';
+
 
 type Events = {
     'config-update': MinecraftServerType
@@ -83,6 +86,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         this.type = config.type ?? this.type
         this.dir = config.dir ?? this.dir
         this.soft = config.soft ?? this.soft
+        this.port = config.port ?? this.port
 
         this.java = config.java ?? this.java
         this.maxMemory = config.maxMemory ?? this.maxMemory
@@ -116,7 +120,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         }
 
         /** Create JVM arguments */
-        if (!serverSoftManager.getSofts().includes(this.soft)) throw new Error(`Server soft not found at ${this.soft}`)
+        if (!serverSoftManager.getSofts().find(s => s.name === this.soft.name)) throw new Error(`Server soft not found at ${this.soft}`)
         const softPath = path.join(Constants.DATA_PATH, 'soft', this.soft.name)
         const customJVMArgs = this.customJVMArgs
             .split(' ')
@@ -126,8 +130,8 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
 
         /** Create server arguments */
         const customServerArgs = this.customServerArgs.split(' ').map((v) => v.trim())
-        if (this.type === 'server') customServerArgs.push(`nogui`)
-        customJVMArgs.push(`-p ${this.port}`)
+        customServerArgs.push(`-p${this.port}`)
+        if (this.type === 'server') customServerArgs.push(`--nogui`)
 
         /** Spawn server process */
         const fullArgs = [...JVMArgs, ...customServerArgs]

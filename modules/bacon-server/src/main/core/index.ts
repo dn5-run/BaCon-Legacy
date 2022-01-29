@@ -52,7 +52,7 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
 
         Logger.init(isDev ? Level.DEBUG : Level.INFO, false)
 
-        this.server.listen(3000)
+        this.server.listen(8080)
     }
 
     public updateStatus(status: typeof ServerStatusDetail[number]) {

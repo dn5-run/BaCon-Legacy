@@ -1,14 +1,17 @@
-import zip from 'adm-zip'
-import fs from 'fs-extra'
-import fetch from 'node-fetch'
-import os from 'os'
-import path from 'path'
-import tar from 'tar'
+import zip from 'adm-zip';
+import fs from 'fs-extra';
+import fetch from 'node-fetch';
+import os from 'os';
+import path from 'path';
+import tar from 'tar';
 
-import { Constants } from '../../../../Constants'
-import { Logger } from '../../../../util/Logger'
-import { statusEmitter } from '../StatusEmitter'
-import { JavaVersion, VersionMeta } from './types'
+
+
+import { Constants } from '../../../../Constants';
+import { Logger } from '../../../../util/Logger';
+import { statusEmitter } from '../StatusEmitter';
+import { JavaVersion, VersionMeta } from './types';
+
 
 export class JavaInstaller {
     public async install(version: JavaVersion) {
@@ -65,15 +68,20 @@ export class JavaInstaller {
             key: `java.${version}`,
             title: `Extracting ${file}...`,
         })
+
         if (ext === '.zip') {
             const zipFile = new zip(file)
             zipFile.extractAllTo(tmp, true)
         } else {
-            await tar.extract({
+            fs.mkdirSync(tmp)
+            // extract all entry to tmp
+            await tar.x({
                 file: file,
-                cwd: tmp,
+                C: tmp,
+                onwarn: (err) => {console.log(err)},
             })
         }
+
         const folder = fs.readdirSync(tmp).find((f) => f.startsWith('jdk'))
         if (!folder) throw new Error('No folder found')
 

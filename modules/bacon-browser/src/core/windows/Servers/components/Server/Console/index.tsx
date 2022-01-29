@@ -1,15 +1,20 @@
-import { styled } from 'baseui'
-import { Checkbox, LABEL_PLACEMENT } from 'baseui/checkbox'
-import { Input } from 'baseui/input'
-import { ParagraphSmall } from 'baseui/typography'
-import React, { useEffect, useRef, useState } from 'react'
+import { styled } from 'baseui';
+import { Checkbox, LABEL_PLACEMENT } from 'baseui/checkbox';
+import { Input } from 'baseui/input';
+import { ParagraphSmall } from 'baseui/typography';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { ServerProps } from '../../..'
+
+
+import { ServerProps } from '../../..';
+
 
 const ConsoleContainer = styled('div', ({ $theme }) => ({
   backgroundColor: $theme.colors.backgroundAlt,
   height: '70vh',
+  width: '100%',
   overflowY: 'auto',
+  overflowX: 'hidden',
 }))
 
 export const Console: React.VFC<ServerProps> = ({ server }) => {
@@ -25,7 +30,7 @@ export const Console: React.VFC<ServerProps> = ({ server }) => {
     })()
 
     const logHandler = (log: string) => {
-      setLogStr((l) => [...l, log])
+      setLogStr((l) => [...l, ...log.split(/\r\n|\n|\r/)])
       if (ref.current && autoScroll) ref.current.scrollTop = ref.current.scrollHeight
     }
     const startHandler = () => {
@@ -51,10 +56,11 @@ export const Console: React.VFC<ServerProps> = ({ server }) => {
       <Input
         startEnhancer="/"
         size="compact"
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            server.command(e.currentTarget.value)
+        onKeyPress={async (e) => {
+          if (e.key === 'Enter' && Object.keys(e.currentTarget.value).length > 0) {
+            const command = e.currentTarget.value
             e.currentTarget.value = ''
+            await server.command(command)
           }
         }}
       />
