@@ -10,4 +10,5 @@ export const Constants = new (class {
             : path.join(process.env.HOME as string, '.bacon')
 
     public readonly TEMP_DIR = path.join(this.DATA_PATH, 'temp')
+    public readonly WEB_DIR = path.join(__dirname, '..', 'web')
 })()
