@@ -1,0 +1,21 @@
+{
+    "name": "BaCon",
+    "workspaces": [
+        "modules/*"
+    ],
+    "scripts": {
+        "format": "yarn prettier:write && yarn eslint:fix",
+        "eslint:fix": "eslint --fix './modules/**/src/**/*.{ts,tsx}'",
+        "prettier:write": "prettier --write './modules/**/src/**/*.{ts,tsx}'"
+    },
+    "packageManager": "yarn@3.1.1",
+    "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^3.1.1",
+        "@typescript-eslint/eslint-plugin": "^5.10.0",
+        "@typescript-eslint/parser": "^5.10.0",
+        "eslint": "^8.7.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-workspaces": "^0.7.0",
+        "prettier": "^2.5.1"
+    }
+}

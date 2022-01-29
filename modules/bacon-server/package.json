@@ -1,0 +1,43 @@
+{
+    "name": "bacon-server",
+    "scripts": {
+        "dev": "cross-env NODE_ENV='development'  ts-node-dev src/main",
+        "watch": "webpack --mode development --watch"
+    },
+    "devDependencies": {
+        "@types/adm-zip": "^0.4.34",
+        "@types/branca": "^0.4.0",
+        "@types/express": "^4.17.13",
+        "@types/express-session": "^1.17.4",
+        "@types/fs-extra": "^9.0.13",
+        "@types/node": "^17.0.9",
+        "@types/node-fetch": "2",
+        "@types/pidusage": "^2.0.2",
+        "@types/tar": "^6.1.1",
+        "@types/webpack-hot-middleware": "^2.25.5",
+        "@types/yaml": "^1.9.7",
+        "cross-env": "^7.0.3",
+        "strict-event-emitter-types": "^2.0.0",
+        "ts-node": "^10.4.0",
+        "ts-node-dev": "^1.1.8",
+        "typescript": "^4.5.4",
+        "webpack": "^5.66.0",
+        "webpack-dev-middleware": "^5.3.0",
+        "webpack-hot-middleware": "^2.25.1"
+    },
+    "dependencies": {
+        "adm-zip": "^0.5.9",
+        "bacon-types": "workspace:*",
+        "branca": "^0.4.0",
+        "express": "^4.17.2",
+        "express-session": "^1.17.2",
+        "fs-extra": "^10.0.0",
+        "node-fetch": "2",
+        "node-json-db": "^1.4.1",
+        "pidusage": "^3.0.0",
+        "socket.io": "^4.4.1",
+        "tar": "^6.1.11",
+        "yaml": "next"
+    },
+    "packageManager": "yarn@3.1.1"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "bacon-types",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "packageManager": "yarn@3.1.1",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
