@@ -18,7 +18,7 @@ export class JavaInstaller {
         if (!fs.existsSync(dir)) fs.mkdirsSync(dir)
         const file = path.join(Constants.TEMP_DIR, `jdk-${version}${ext}`)
 
-        Logger.get().info(`Downloading ${version}...`)
+        Logger.get().info(`Downloading ${url}...`)
         await this.downloadFile(version, file)
 
         Logger.get().info(`Extracting ${version}...`)

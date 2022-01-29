@@ -12,7 +12,7 @@ class ServerSoftManager {
     private readonly downloadQueue: { url: string; name?: string }[] = []
 
     constructor() {
-        if (!fs.existsSync(this.Directory)) fs.mkdirSync(this.Directory)
+        if (!fs.existsSync(this.Directory)) fs.mkdirsSync(this.Directory)
     }
 
     public addQueue(url: string, name: string) {
