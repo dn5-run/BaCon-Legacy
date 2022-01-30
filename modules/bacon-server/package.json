@@ -1,8 +1,7 @@
 {
     "name": "bacon-server",
     "scripts": {
-        "dev": "cross-env NODE_ENV='development'  ts-node-dev src/main",
-        "watch": "webpack --mode development --watch"
+        "dev": "cross-env NODE_ENV='development'  ts-node-dev src"
     },
     "devDependencies": {
         "@types/adm-zip": "^0.4.34",

@@ -1,16 +1,23 @@
-import zip from 'adm-zip'
-import fs from 'fs-extra'
-import fetch from 'node-fetch'
-import os from 'os'
-import path from 'path'
-import tar from 'tar'
+import zip from 'adm-zip';
+import fs from 'fs-extra';
+import fetch from 'node-fetch';
+import os from 'os';
+import path from 'path';
+import tar from 'tar';
 
-import { Constants } from '../../../../Constants'
-import { Logger } from '../../../../util/Logger'
-import { statusEmitter } from '../StatusEmitter'
-import { JavaVersion, VersionMeta } from './types'
+
+
+import { Constants } from '../../../../Constants';
+import { Logger } from '../../../../util/Logger';
+import { statusEmitter } from '../StatusEmitter';
+import { JavaVersion, JreSHA256, VersionMeta } from './types';
+
 
 export class JavaInstaller {
+    public async installTask(version: JavaVersion) {
+        await this.install(version)
+        Logger.get().info(`Installed ${version}`)
+    }
     public async install(version: JavaVersion) {
         const url = this.getDownloadLink(version)
         const ext = url.endsWith('.zip') ? '.zip' : '.tar.gz'
@@ -51,7 +58,14 @@ export class JavaInstaller {
                     })
                     ws.write(chunk)
                 })
-                res.body.on('end', () => {
+                res.body.on('end', async () => {
+                    const sha = this.getSHA256(version)
+                    const file = fs.readFileSync(dest)
+                    const hash = require('crypto').createHash('sha256').update(file)
+                    if (hash.digest('hex') !== sha) {
+                        Logger.get().warn(`SHA256 mismatch for ${version}. Retrying...`)
+                        await this.downloadFile(version, dest)
+                    }
                     resolve()
                 })
             })
@@ -70,14 +84,12 @@ export class JavaInstaller {
             const zipFile = new zip(file)
             zipFile.extractAllTo(tmp, true)
         } else {
+            fs.existsSync(tmp) && fs.removeSync(tmp)
             fs.mkdirSync(tmp)
-            // extract all entry to tmp
-            await tar.x({
+            tar.x({
                 file: file,
                 C: tmp,
-                onwarn: (err) => {
-                    console.log(err)
-                },
+                sync: true
             })
         }
 
@@ -87,6 +99,9 @@ export class JavaInstaller {
         const dir = path.join(Constants.DATA_PATH, 'java', version)
         if (fs.existsSync(dir)) fs.removeSync(dir)
         fs.moveSync(path.join(tmp, folder), dir)
+
+        fs.removeSync(tmp)
+        fs.removeSync(file)
     }
 
     private getDownloadLink(version: JavaVersion) {
@@ -104,5 +119,14 @@ export class JavaInstaller {
         const path2 = version === '8' ? `${meta.first}${meta.last}` : `${meta.first}_${meta.last}`
 
         return `https://github.com/adoptium/temurin${version}-binaries/releases/download/jdk${path1}/OpenJDK${version}U-jre_${osArchName}_${osName}_hotspot_${path2}${ext}`
+    }
+
+    private getSHA256(version: JavaVersion) {
+        const sha256List = JreSHA256[version]
+        const osShaList = sha256List[process.platform]
+        if(!osShaList) throw new Error(`Unsupported OS: ${process.platform}`)
+        const osSha = osShaList[os.arch()]
+        if(!osSha) throw new Error(`Unsupported Architecture: ${os.arch()}`)
+        return osSha
     }
 }

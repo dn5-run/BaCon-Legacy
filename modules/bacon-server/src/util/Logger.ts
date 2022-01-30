@@ -44,14 +44,14 @@ export class Logger extends (EventEmitter as new () => StrictEventEmitter<EventE
         if (!fs.existsSync(this.logDir)) fs.mkdirSync(this.logDir)
         if (this.fileOutPut) this.writeFile = fs.createWriteStream(path.join(this.logDir, `${new Date().toISOString().replace(/:/g, '_')}.log`))
 
-        process.on('uncaughtException', (err) => {
-            this.error(err.message)
-            process.exit(1)
-        })
-        process.on('unhandledRejection', (reason, p) => {
-            this.error(`Unhandled Rejection at: Promise ${p}, reason: ${reason}`)
-            process.exit(1)
-        })
+        // process.on('uncaughtException', (err) => {
+        //     this.error(err.message)
+        //     process.exit(1)
+        // })
+        // process.on('unhandledRejection', (reason, p) => {
+        //     this.error(`Unhandled Rejection at: Promise ${p}, reason: ${reason}`)
+        //     process.exit(1)
+        // })
     }
 
     private log(level: Level, args: unknown[]) {

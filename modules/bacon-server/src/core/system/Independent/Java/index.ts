@@ -25,14 +25,14 @@ class Java {
         const installTasks = []
         for (const v of ['8', '11', '17'] as JavaVersion[]) {
             if (!javas.includes(v)) {
-                installTasks.push(this.installer.install(v))
+                installTasks.push(this.installer.installTask(v))
                 continue
             }
             try {
                 const bin = this.getBin(path.join(this.JavaDir, v))
                 this.getVersion(bin)
             } catch (error) {
-                installTasks.push(this.installer.install(v))
+                installTasks.push(this.installer.installTask(v))
             }
         }
         await Promise.all(installTasks)
