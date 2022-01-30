@@ -1,13 +1,10 @@
-import { styled } from 'baseui';
-import { Checkbox, LABEL_PLACEMENT } from 'baseui/checkbox';
-import { Input } from 'baseui/input';
-import { ParagraphSmall } from 'baseui/typography';
-import React, { useEffect, useRef, useState } from 'react';
+import { styled } from 'baseui'
+import { Checkbox, LABEL_PLACEMENT } from 'baseui/checkbox'
+import { Input } from 'baseui/input'
+import { ParagraphSmall } from 'baseui/typography'
+import React, { useEffect, useRef, useState } from 'react'
 
-
-
-import { ServerProps } from '../../..';
-
+import { ServerProps } from '../../..'
 
 const ConsoleContainer = styled('div', ({ $theme }) => ({
   backgroundColor: $theme.colors.backgroundAlt,

@@ -1,5 +1,4 @@
-import path from 'path';
-
+import path from 'path'
 
 export const Constants = new (class {
     public readonly DATA_PATH =

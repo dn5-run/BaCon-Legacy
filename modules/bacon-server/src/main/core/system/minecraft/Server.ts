@@ -1,22 +1,19 @@
-import { MinecraftServerType, ServerProperties, ServerSoft, ServerStatus, ServerType } from 'bacon-types';
-import { ChildProcess, spawn } from 'child_process';
-import EventEmitter from 'events';
-import fs from 'fs-extra';
-import os from 'os';
-import path from 'path';
-import pidUsage from 'pidusage';
-import StrictEventEmitter from 'strict-event-emitter-types';
+import { MinecraftServerType, ServerProperties, ServerSoft, ServerStatus, ServerType } from 'bacon-types'
+import { ChildProcess, spawn } from 'child_process'
+import EventEmitter from 'events'
+import fs from 'fs-extra'
+import os from 'os'
+import path from 'path'
+import pidUsage from 'pidusage'
+import StrictEventEmitter from 'strict-event-emitter-types'
 
-
-
-import { Constants } from '../../../Constants';
-import { Logger } from '../../../util/Logger';
-import { javaManager } from '../Independent/Java';
-import { serverSoftManager } from '../Independent/ServerSoftManager';
-import { statusEmitter } from '../Independent/StatusEmitter';
-import { Plugin } from './Plugin';
-import { parseServerProperties, stringifyServerProperties } from './PropertiesParser';
-
+import { Constants } from '../../../Constants'
+import { Logger } from '../../../util/Logger'
+import { javaManager } from '../Independent/Java'
+import { serverSoftManager } from '../Independent/ServerSoftManager'
+import { statusEmitter } from '../Independent/StatusEmitter'
+import { Plugin } from './Plugin'
+import { parseServerProperties, stringifyServerProperties } from './PropertiesParser'
 
 type Events = {
     'config-update': MinecraftServerType
@@ -120,7 +117,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         }
 
         /** Create JVM arguments */
-        if (!serverSoftManager.getSofts().find(s => s.name === this.soft.name)) throw new Error(`Server soft not found at ${this.soft}`)
+        if (!serverSoftManager.getSofts().find((s) => s.name === this.soft.name)) throw new Error(`Server soft not found at ${this.soft}`)
         const softPath = path.join(Constants.DATA_PATH, 'soft', this.soft.name)
         const customJVMArgs = this.customJVMArgs
             .split(' ')

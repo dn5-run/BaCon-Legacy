@@ -1,23 +1,20 @@
-import Branca from 'branca';
-import express, { RequestHandler, Router } from 'express';
-import session from 'express-session';
-import fs from 'fs-extra';
-import http from 'http';
-import fetch from 'node-fetch';
-import path from 'path';
+import Branca from 'branca'
+import express, { RequestHandler, Router } from 'express'
+import session from 'express-session'
+import fs from 'fs-extra'
+import http from 'http'
+import fetch from 'node-fetch'
+import path from 'path'
 
-
-
-import { isDev } from '..';
-import { Constants } from '../Constants';
-import { Core } from '../core';
-import { Dev } from '../dev';
-import { SessionStore } from '../store/SessionStore';
-import { Logger } from '../util/Logger';
-import { Authenticator } from './Auth/Authenticator';
-import { IO } from './io';
-import { SessionData } from './io/SessionData';
-
+import { isDev } from '..'
+import { Constants } from '../Constants'
+import { Core } from '../core'
+import { Dev } from '../dev'
+import { SessionStore } from '../store/SessionStore'
+import { Logger } from '../util/Logger'
+import { Authenticator } from './Auth/Authenticator'
+import { IO } from './io'
+import { SessionData } from './io/SessionData'
 
 const branca = Branca('49824bebd4b395e520ad780d644ff27caac39caccab02348b25a6af4f606e326')
 
@@ -57,7 +54,6 @@ export class ApiServer {
         if (!isDev) {
             this.app.get('/main.js', (req, res) => res.sendFile(path.join(Constants.WEB_DIR, 'main.js')))
             this.app.get('/', (req, res) => res.sendFile(path.join(Constants.WEB_DIR, 'index.html')))
-
         }
     }
 

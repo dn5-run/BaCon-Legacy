@@ -1,17 +1,14 @@
-import zip from 'adm-zip';
-import fs from 'fs-extra';
-import fetch from 'node-fetch';
-import os from 'os';
-import path from 'path';
-import tar from 'tar';
+import zip from 'adm-zip'
+import fs from 'fs-extra'
+import fetch from 'node-fetch'
+import os from 'os'
+import path from 'path'
+import tar from 'tar'
 
-
-
-import { Constants } from '../../../../Constants';
-import { Logger } from '../../../../util/Logger';
-import { statusEmitter } from '../StatusEmitter';
-import { JavaVersion, VersionMeta } from './types';
-
+import { Constants } from '../../../../Constants'
+import { Logger } from '../../../../util/Logger'
+import { statusEmitter } from '../StatusEmitter'
+import { JavaVersion, VersionMeta } from './types'
 
 export class JavaInstaller {
     public async install(version: JavaVersion) {
@@ -78,7 +75,9 @@ export class JavaInstaller {
             await tar.x({
                 file: file,
                 C: tmp,
-                onwarn: (err) => {console.log(err)},
+                onwarn: (err) => {
+                    console.log(err)
+                },
             })
         }
 
