@@ -7,9 +7,10 @@
         "format": "yarn prettier:write && yarn eslint:fix",
         "eslint:fix": "eslint --fix './modules/**/src/**/*.{ts,tsx}'",
         "prettier:write": "prettier --write './modules/**/src/**/*.{ts,tsx}'",
-        "build": "ts-node ./build.ts"
+        "compile": "ts-node ./build.ts compile",
+        "build": "ts-node ./build.ts build"
     },
-    "bin":{
+    "bin": {
         "bacon": "./dist/server/index.js"
     },
     "packageManager": "yarn@3.1.1",
