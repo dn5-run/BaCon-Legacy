@@ -29,6 +29,7 @@
         "adm-zip": "^0.5.9",
         "bacon-types": "workspace:*",
         "branca": "^0.4.0",
+        "commander": "^9.0.0",
         "express": "^4.17.2",
         "express-session": "^1.17.2",
         "fs-extra": "^10.0.0",

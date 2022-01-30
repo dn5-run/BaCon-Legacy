@@ -5,7 +5,7 @@ import path from 'path'
 import { EventEmitter } from 'stream'
 import StrictEventEmitter from 'strict-event-emitter-types'
 
-import { isDev } from '..'
+import { args, isDev } from '..'
 import { Constants } from '../Constants'
 import { ApiServer } from '../http'
 import { Level, Logger } from '../util/Logger'
@@ -23,7 +23,7 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
     public static instance: Core
 
     private status: typeof ServerStatusDetail[number] = 'starting'
-    public readonly config = new JsonDB(path.join(Constants.DATA_PATH, 'config'), true, isDev)
+    public readonly config = new JsonDB(path.join(Constants.DATA_PATH, 'config'), true, true)
 
     // futures
 
@@ -49,10 +49,11 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
     public async bootstrap() {
         if (!fs.existsSync(Constants.DATA_PATH)) fs.mkdirsSync(Constants.DATA_PATH)
         if (!fs.existsSync(Constants.TEMP_DIR)) fs.mkdirsSync(Constants.TEMP_DIR)
+        this.initConfig()
 
         Logger.init(isDev ? Level.DEBUG : Level.INFO, false)
 
-        this.server.listen(8080)
+        this.server.listen(args.port || this.config.getData('/port') || 41180)
     }
 
     public updateStatus(status: typeof ServerStatusDetail[number]) {
@@ -61,5 +62,10 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
     }
     public getStatus() {
         return this.status
+    }
+
+    private initConfig() {
+        Logger.get().info('Initializing config...')
+        if (!this.config.exists('/port')) this.config.push('/port', 41180)
     }
 }
