@@ -1,17 +1,14 @@
-import zip from 'adm-zip';
-import fs from 'fs-extra';
-import fetch from 'node-fetch';
-import os from 'os';
-import path from 'path';
-import tar from 'tar';
+import zip from 'adm-zip'
+import fs from 'fs-extra'
+import fetch from 'node-fetch'
+import os from 'os'
+import path from 'path'
+import tar from 'tar'
 
-
-
-import { Constants } from '../../../../Constants';
-import { Logger } from '../../../../util/Logger';
-import { statusEmitter } from '../StatusEmitter';
-import { JavaVersion, JreSHA256, VersionMeta } from './types';
-
+import { Constants } from '../../../../Constants'
+import { Logger } from '../../../../util/Logger'
+import { statusEmitter } from '../StatusEmitter'
+import { JavaVersion, JreSHA256, VersionMeta } from './types'
 
 export class JavaInstaller {
     public async installTask(version: JavaVersion) {
@@ -89,7 +86,7 @@ export class JavaInstaller {
             tar.x({
                 file: file,
                 C: tmp,
-                sync: true
+                sync: true,
             })
         }
 
@@ -124,9 +121,9 @@ export class JavaInstaller {
     private getSHA256(version: JavaVersion) {
         const sha256List = JreSHA256[version]
         const osShaList = sha256List[process.platform]
-        if(!osShaList) throw new Error(`Unsupported OS: ${process.platform}`)
+        if (!osShaList) throw new Error(`Unsupported OS: ${process.platform}`)
         const osSha = osShaList[os.arch()]
-        if(!osSha) throw new Error(`Unsupported Architecture: ${os.arch()}`)
+        if (!osSha) throw new Error(`Unsupported Architecture: ${os.arch()}`)
         return osSha
     }
 }

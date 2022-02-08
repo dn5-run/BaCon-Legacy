@@ -68,4 +68,13 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
         Logger.get().info('Initializing config...')
         if (!this.config.exists('/port')) this.config.push('/port', 41180)
     }
+
+    public async exit() {
+        const tasks: Promise<void>[] = []
+        for (const s of this.serverManager.getServers()) {
+            const status = await s.getStatus()
+            if (status.status) tasks.push(s.stop())
+        }
+        await Promise.all(tasks)
+    }
 }
