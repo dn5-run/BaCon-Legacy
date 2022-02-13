@@ -17,6 +17,7 @@ class Configuration {
         secret: crypto.randomBytes(32).toString('hex'),
     }
     constructor() {
+        if (!fs.existsSync(Constants.DATA_PATH)) fs.mkdirSync(Constants.DATA_PATH)
         if (!fs.existsSync(path.join(Constants.DATA_PATH, 'config.json'))) this.init()
         else {
             const config = fs.readJSONSync(path.join(Constants.DATA_PATH, 'config.json')) as Configuration

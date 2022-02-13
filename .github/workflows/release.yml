@@ -17,6 +17,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
       - uses: actions/checkout@v2
+      - uses: battila7/get-version-action@v2
 
       - name: Build the application
         uses: ./.github/actions/build
