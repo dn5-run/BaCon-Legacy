@@ -35,7 +35,7 @@ export const Servers: React.VFC = () => {
   return currentServer ? (
     <ServerFC server={currentServer} />
   ) : (
-    <StyledFlexGrid flexGridColumnCount={[1, 1, 3]} flexGridColumnGap="scale800" flexGridRowGap="scale800">
+    <StyledFlexGrid flexGridColumnCount={[1, 1, 2, 3]} flexGridColumnGap="scale800" flexGridRowGap="scale800">
       {servers.map((server, index) => (
         <FlexGridItem width={'calc(100% / 3)'} key={index}>
           <ServerCard server={server} />

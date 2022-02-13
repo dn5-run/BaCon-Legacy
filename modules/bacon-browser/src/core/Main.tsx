@@ -5,6 +5,7 @@ import React, { isValidElement, useState } from 'react'
 import { Confirmation, showConfirmation } from './components/Confirmation'
 import { Notice, showNotification } from './components/Notice'
 import { store } from './store'
+import { Loading } from './windows/Loading'
 import { Login } from './windows/Login'
 import { ServerSoftList } from './windows/ServerSoft'
 import { Servers } from './windows/Servers'
@@ -15,7 +16,8 @@ const Container = styled('div', ({ $theme }) => ({
 }))
 
 export const Main: React.VFC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(store.client.isAuthorized)
+  const [isLoggedIn, setIsLoggedIn] = useState(store.client.isAuthorized)
+  const [online, setOnline] = useState(false)
   const [content, setContent] = useState<React.ReactNode>(<Servers />)
   const [mainItems] = useState<NavItemT[]>([
     { label: 'Servers', info: <Servers /> },
@@ -47,7 +49,7 @@ export const Main: React.VFC = () => {
         }}
       />
 
-      {isLoggedIn ? content : <Login onLogin={() => setIsLoggedIn(true)} />}
+      {online ? isLoggedIn ? content : <Login onLogin={() => setIsLoggedIn(true)} /> : <Loading onOnline={() => setOnline(true)} />}
 
       <Notice />
       <Confirmation />

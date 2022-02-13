@@ -2,6 +2,7 @@ import { MinecraftServerType, ServerProperties, ServerSoft, ServerStatus, Server
 import { ChildProcess, spawn } from 'child_process'
 import EventEmitter from 'events'
 import fs from 'fs-extra'
+import * as mcutil from 'minecraft-server-util'
 import os from 'os'
 import path from 'path'
 import pidUsage from 'pidusage'
@@ -58,6 +59,16 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         this.customServerArgs = config.customServerArgs ?? ''
 
         this.autoStart = config.autoStart
+    }
+
+    private async ping() {
+        try {
+            return await mcutil.status('localhost', this.port, {
+                timeout: 1000 * 2,
+            })
+        } catch (error) {
+            return undefined
+        }
     }
 
     public getConfig(): MinecraftServerType {
@@ -175,7 +186,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         return new Promise<void>((resolve, reject) => {
             if (!this.process) reject(new Error('Server not running'))
 
-            if (this.type === 'proxy') this.process?.stdin?.write('end' + os.EOL)
+            if (this.type === 'velocity' || this.type === 'bungee') this.process?.stdin?.write('end' + os.EOL)
             else this.process?.stdin?.write('stop' + os.EOL)
 
             this.once('close', resolve)
@@ -184,7 +195,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
 
     public command(command: string) {
         if (!this.process) throw new Error('Server not running')
-        if ((this.type === 'proxy' && command === 'end') || (this.type === 'server' && command === 'stop')) this.stop()
+        if (((this.type === 'velocity' || this.type === 'bungee') && command === 'end') || (this.type === 'server' && command === 'stop')) this.stop()
 
         this.process.stdin?.write(command + os.EOL)
         this.commandHistory.push(command)
@@ -193,11 +204,13 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
     public async getStatus(): Promise<ServerStatus> {
         if (!this.process || !this.process.pid) return { status: false }
         const data = await pidUsage(this.process.pid)
+        const ping = await this.ping()
         return {
             status: true,
             cpuUsage: data.cpu / os.cpus().length,
             memoryUsage: data.memory,
             totalMemory: os.totalmem(),
+            players: ping ? ping.players.online : 'N/A',
         }
     }
 
@@ -216,7 +229,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         return fs
             .readdirSync(path.join(this.dir, 'plugins'))
             .filter((file) => file.endsWith('.jar'))
-            .map((file) => new Plugin(path.join(this.dir, 'plugins', file)))
+            .map((file) => new Plugin(path.join(this.dir, 'plugins', file), this.type))
     }
 
     public deletePlugin(fileName: string) {

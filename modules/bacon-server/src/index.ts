@@ -15,11 +15,11 @@ export const args = program
     .parse(process.argv)
     .opts()
 
-Core.init()
 const essentialDirs = [Constants.DATA_PATH, Constants.TEMP_DIR, path.join(Constants.DATA_PATH, 'database')]
 for (const dir of essentialDirs) {
     if (!fs.existsSync(dir)) fs.mkdirsSync(dir)
 }
+Core.init()
 
 const exitHandler = async () => {
     Logger.get().info('Shutting down...')

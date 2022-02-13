@@ -13,6 +13,7 @@ export class Action<
         public readonly id: ActionName,
         public readonly permission: Permission | ((...args: Args) => Permission) | undefined,
         private readonly handler: HandlerType,
+        public readonly needAuth = true,
     ) {}
 
     public execute(sender: User, args: Args) {

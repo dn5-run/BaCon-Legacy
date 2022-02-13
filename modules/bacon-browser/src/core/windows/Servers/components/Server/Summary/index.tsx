@@ -19,11 +19,11 @@ export const Summary: React.VFC<ServerProps> = ({ server }) => {
         </FlexGridItem>
       </StyledFlexGrid>
 
-      <StyledFlexGrid flexGridColumnCount={3} flexGridColumnGap="scale800" flexGridRowGap="scale800">
+      {/* <StyledFlexGrid flexGridColumnCount={3} flexGridColumnGap="scale800" flexGridRowGap="scale800">
         <FlexGridItem>
           <ChartCard />
         </FlexGridItem>
-      </StyledFlexGrid>
+      </StyledFlexGrid> */}
     </>
   )
 }

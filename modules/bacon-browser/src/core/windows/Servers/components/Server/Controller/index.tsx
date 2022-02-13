@@ -18,7 +18,7 @@ export const Controller: React.VFC<ServerProps> = ({ server }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        margin: '1rem',
+        // margin: '1rem',
       })}
     >
       <ButtonGroup>

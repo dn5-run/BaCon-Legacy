@@ -1,5 +1,5 @@
 import { useStyletron } from 'baseui'
-import { Tab, Tabs } from 'baseui/tabs-motion'
+import { Tab, TabOverrides, Tabs } from 'baseui/tabs-motion'
 import React, { useEffect, useState } from 'react'
 
 import { ServerProps } from '../..'
@@ -8,6 +8,15 @@ import { Console } from './Console'
 import { Controller } from './Controller'
 import { Plugins } from './Plugins'
 import { Summary } from './Summary'
+
+const TabOverrides: TabOverrides = {
+  TabPanel: {
+    style: {
+      maxHeight: '75vh',
+      overflow: 'auto',
+    }
+  }
+}
 
 export const ServerFC: React.VFC<ServerProps> = ({ server }) => {
   const [css] = useStyletron()
@@ -38,18 +47,18 @@ export const ServerFC: React.VFC<ServerProps> = ({ server }) => {
           setActiveKey(activeKey)
         }}
         activateOnFocus
-        orientation="vertical"
+        orientation="horizontal"
       >
-        <Tab title="Summary">
+        {/* <Tab title="Summary" overrides={TabOverrides}>
           <Summary server={server} />
-        </Tab>
-        <Tab title="Console">
+        </Tab> */}
+        <Tab title="Console" overrides={TabOverrides}>
           <Console server={server} />
         </Tab>
-        <Tab title="config">
+        <Tab title="config" overrides={TabOverrides}>
           <Config server={server} />
         </Tab>
-        <Tab title="plugins">
+        <Tab title="plugins" overrides={TabOverrides}>
           <Plugins server={server} />
         </Tab>
       </Tabs>

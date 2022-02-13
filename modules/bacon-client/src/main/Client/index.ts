@@ -1,4 +1,4 @@
-import { Actions, ArgumentTypes, ClientToServerEvents, MinecraftServerType, ServerToClientEvents } from 'bacon-types'
+import { Actions, ArgumentTypes, ClientToServerEvents, MinecraftServerType, ServerStatusDetail, ServerToClientEvents } from 'bacon-types'
 import { io, Socket } from 'socket.io-client'
 
 import { fetch } from '../util/fetch'
@@ -86,23 +86,26 @@ export class Client {
         })
     }
 
-    public getStatus() {
-        return this.action('GET_STATUS')
+    public async getStatus(): Promise<typeof ServerStatusDetail[number]> {
+        const res = await fetch(`${this.httpAddress}/api/status`)
+        if (res.status === 200) return (await res.text()) as typeof ServerStatusDetail[number]
+        else throw new Error(await res.text())
+    }
+
+    public getUsers() {
+        return this.action('USER_LIST')
     }
 
     public createServer(config: MinecraftServerType) {
         return this.action('MINECRAFT_SERVER_CREATE', config)
     }
-
     public deleteServer(name: string) {
         return this.action('MINECRAFT_SERVER_DELETE', name)
     }
-
     public async getServers() {
         const configs = await this.action('MINECRAFT_SERVER_LIST')
         return configs.map((config) => new Server(config, this))
     }
-
     public async getServer(name: string) {
         const config = await this.action('MINECRAFT_SERVER_GET', name)
         return new Server(config, this)

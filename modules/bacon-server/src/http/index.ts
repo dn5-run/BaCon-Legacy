@@ -1,14 +1,17 @@
 import Branca from 'branca'
+import contentDisposition from 'content-disposition'
 import express, { RequestHandler, Router } from 'express'
 import session from 'express-session'
 import fs from 'fs-extra'
 import http from 'http'
+import multer from 'multer'
 import fetch from 'node-fetch'
 import path from 'path'
 
 import { isDev } from '..'
 import { Constants } from '../Constants'
 import { Core } from '../core'
+import { serverSoftManager } from '../core/system/Independent/ServerSoftManager'
 import { Dev } from '../dev'
 import { SessionStore } from '../store/SessionStore'
 import { Logger } from '../util/Logger'
@@ -47,6 +50,7 @@ export class ApiServer {
             sessionMid(socket.request as express.Request, {} as any, next as express.NextFunction)
         })
 
+        this.app.use('/api', this.common())
         this.app.use('/api/server', this.minecraft())
         this.app.use('/api/auth', this.auth())
 
@@ -71,6 +75,14 @@ export class ApiServer {
         if (!session) return res.status(401).send('Unauthorized')
 
         next()
+    }
+
+    private common() {
+        const router = Router()
+        router.get('/status', (req, res) => {
+            res.status(200).send(this._core.status)
+        })
+        return router
     }
 
     private auth() {
@@ -121,10 +133,12 @@ export class ApiServer {
             if (!url) return res.status(400).send('Bad request')
             try {
                 const response = await fetch(url)
-                const redirectedUrl = response.url
                 if (!response.ok) return res.status(response.status).send(response.statusText)
+                const disposition = response.headers.get('content-disposition')
+                    ? contentDisposition.parse(response.headers.get('content-disposition') as string)
+                    : undefined
                 const size = response.headers.get('content-length') || '0'
-                const name = response.headers.get('content-disposition') || redirectedUrl.split('/').pop() || ''
+                const name = disposition ? disposition.parameters.filename : url.split('/').pop()
                 const mime = response.headers.get('content-type') || ''
 
                 res.json({
@@ -145,6 +159,20 @@ export class ApiServer {
             if (!fs.existsSync(logPath)) return res.status(404).send('Log not found')
 
             res.send(fs.readFileSync(logPath, 'utf8'))
+        })
+
+        const softTempDir = path.join(Constants.TEMP_DIR, 'serversoft')
+        if (!fs.existsSync(softTempDir)) fs.mkdirSync(softTempDir)
+        const upload = multer({ dest: softTempDir })
+
+        router.post('/upload/serversoft', upload.array('files', 5), (req, res) => {
+            if (!req.files) return res.status(400).send('Bad request')
+            const files = req.files as Express.Multer.File[]
+            for (const file of files) {
+                serverSoftManager.addSoft(file.path, file.originalname)
+                fs.removeSync(file.path)
+            }
+            res.status(200).send('OK')
         })
         return router
     }

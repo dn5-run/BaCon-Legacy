@@ -1,5 +1,6 @@
 {
     "name": "BaCon",
+    "version": "0.1",
     "workspaces": [
         "modules/*"
     ],

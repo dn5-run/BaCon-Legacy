@@ -22,7 +22,10 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
     public static init = () => (this.instance = new Core())
     public static instance: Core
 
-    private status: typeof ServerStatusDetail[number] = 'starting'
+    private _status: typeof ServerStatusDetail[number] = 'starting'
+    public get status(): typeof ServerStatusDetail[number] {
+        return this._status
+    }
     public readonly config = new JsonDB(path.join(Constants.DATA_PATH, 'config'), true, true)
 
     // futures
@@ -36,6 +39,8 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
 
     private constructor() {
         super()
+        Logger.init(isDev ? Level.DEBUG : Level.INFO, false)
+
         this.server = new ApiServer(this)
 
         this.permissionManager = new PermissionManager()
@@ -51,17 +56,13 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
         if (!fs.existsSync(Constants.TEMP_DIR)) fs.mkdirsSync(Constants.TEMP_DIR)
         this.initConfig()
 
-        Logger.init(isDev ? Level.DEBUG : Level.INFO, false)
-
         this.server.listen(args.port || this.config.getData('/port') || 41180)
     }
 
     public updateStatus(status: typeof ServerStatusDetail[number]) {
-        this.status = status
+        Logger.get().debug(`Status changed to ${status}`)
+        this._status = status
         this.emit('status-update', status)
-    }
-    public getStatus() {
-        return this.status
     }
 
     private initConfig() {

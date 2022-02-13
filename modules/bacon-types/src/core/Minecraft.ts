@@ -1,4 +1,4 @@
-export type ServerType = 'server' | 'proxy' | 'other'
+export type ServerType = 'server' | 'bungee' | 'velocity' | 'other'
 
 export interface MinecraftServerType {
     name: string
@@ -17,7 +17,7 @@ export interface MinecraftServerType {
 export interface PluginType {
     fileName: string
     fileSize: number
-    yaml?: PluginYaml
+    meta?: PluginYaml
 }
 
 export type ServerStatus =
@@ -26,6 +26,7 @@ export type ServerStatus =
           cpuUsage: number
           memoryUsage: number
           totalMemory: number
+          players: number | string
       }
     | {
           status: false
@@ -121,6 +122,17 @@ export type Permission = {
     children: {
         [key: string]: boolean
     }
+}
+
+export interface VelocityPluginJson {
+    id: string
+    name: string
+    version: string
+    description: string
+    url: string
+    authors: string[]
+    dependencies: string[]
+    main: string
 }
 
 // Server software

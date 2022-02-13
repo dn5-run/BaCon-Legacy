@@ -36,6 +36,14 @@ export class IO extends Server<ClientToServerEvents, ServerToClientEvents, Inter
             const logger = Logger.get()
 
             logger.info(`Client connected: ${socket.id}  ip: ${socket.handshake.address} port: ${socket.handshake.auth}`)
+
+            const noAuthActionHandler: ClientToServerEvents['action'] = (action, args) => {
+                socket.emit('action', action, {
+                    result: false,
+                    error: 'Not authenticated',
+                })
+            }
+            socket.on('action', noAuthActionHandler)
             socket.on('disconnect', () => {
                 logger.info(`Client disconnected: ${socket.id}`)
             })
@@ -49,6 +57,7 @@ export class IO extends Server<ClientToServerEvents, ServerToClientEvents, Inter
                     sessionData.socket = socket
 
                     this.initForAuthenticatedUser(sessionData)
+                    socket.off('action', noAuthActionHandler)
                     socket.emit('auth', true)
                     logger.info(`User authenticated with token: ${token}`)
                 } else {

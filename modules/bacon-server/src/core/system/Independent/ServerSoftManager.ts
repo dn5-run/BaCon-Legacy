@@ -68,6 +68,10 @@ class ServerSoftManager {
             })
     }
 
+    public addSoft(filePath: string, original?: string) {
+        fs.copySync(filePath, path.join(this.Directory, original || path.basename(filePath)))
+    }
+
     public deleteSoft(name: string) {
         if (!fs.existsSync(path.join(this.Directory, name))) return
         fs.unlinkSync(path.join(this.Directory, name))

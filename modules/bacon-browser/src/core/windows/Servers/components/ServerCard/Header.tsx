@@ -5,18 +5,22 @@ import { ButtonGroup } from 'baseui/button-group'
 import { HeadingSmall, ParagraphMedium } from 'baseui/typography'
 import React, { useState } from 'react'
 import { FaServer } from 'react-icons/fa'
-import { VscAdd, VscDebugRestart, VscDebugStart, VscDebugStop, VscRemove } from 'react-icons/vsc'
+import { VscAdd, VscCircleLargeFilled, VscDebugRestart, VscDebugStart, VscDebugStop, VscRemove, VscTerminal } from 'react-icons/vsc'
 
 import { ServerProps, toggleServer } from '../..'
 
 export const Header: React.VFC<
   ServerProps & { refObj: React.RefObject<HTMLDivElement>; status: ServerStatus; isOpen: boolean; setIsOpen: (isOpen: boolean) => void }
 > = ({ refObj, status, server, isOpen, setIsOpen }) => {
-  const [css] = useStyletron()
+  const [css, theme] = useStyletron()
   const flex = css({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    [theme.mediaQuery.large]: {
+      flexWrap: 'nowrap',
+    },
   })
 
   const [startIsLoading, setStartIsLoading] = useState(false)
@@ -26,17 +30,30 @@ export const Header: React.VFC<
   return (
     <div ref={refObj}>
       <div className={flex}>
-        <HeadingSmall>
-          <FaServer /> {server.name}
-        </HeadingSmall>
+        <div>
+          <HeadingSmall>
+            <VscCircleLargeFilled color={status.status ? '#DEFFDF' : '#FFC6C6'} /> {server.name}
+          </HeadingSmall>
+          <div>
+            {status.status ? (
+              <ParagraphMedium>
+                <b>CPU</b>: {status.cpuUsage}% | <b>RAM</b>: {status.memoryUsage} MB | <b>Players</b> : {status.players}
+              </ParagraphMedium>
+            ) : (
+              <ParagraphMedium>
+                <b>CPU</b>: 0% | <b>RAM</b>: 0MB | <b>Players</b> : N/A
+              </ParagraphMedium>
+            )}
+          </div>
+        </div>
         <div className={flex}>
-          <ButtonGroup size="mini">
+          <ButtonGroup size="compact">
             <Button
               onClick={() => {
                 toggleServer(server.name)
               }}
             >
-              Open Controller
+              <VscTerminal />
             </Button>
             <Button
               isLoading={startIsLoading}
@@ -69,24 +86,11 @@ export const Header: React.VFC<
               <VscDebugRestart />
             </Button>
           </ButtonGroup>
-          <ButtonGroup size="mini" kind="primary">
-            <Button size="mini" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <VscRemove /> : <VscAdd />}
-            </Button>
+          <ButtonGroup size="compact" kind="primary">
+            <Button onClick={() => setIsOpen(!isOpen)}>{isOpen ? <VscRemove /> : <VscAdd />}</Button>
           </ButtonGroup>
         </div>
       </div>
-      <>
-        {status.status ? (
-          <ParagraphMedium>
-            <b>CPU</b>: {status.cpuUsage}% | <b>RAM</b>: {status.memoryUsage} MB | <b>Players</b> : 0
-          </ParagraphMedium>
-        ) : (
-          <ParagraphMedium>
-            <b>CPU</b>: 0% | <b>RAM</b>: 0MB | <b>Players</b> : 0
-          </ParagraphMedium>
-        )}
-      </>
     </div>
   )
 }

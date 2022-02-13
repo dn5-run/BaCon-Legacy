@@ -47,7 +47,8 @@ export const Config: React.VFC<ServerProps> = ({ server }) => {
       <ParagraphMedium>Type</ParagraphMedium>
       <RadioGroup value={type} onChange={(e) => setType(e.currentTarget.value as ServerType)} name="ServerType" align="horizontal">
         <Radio value="server">Server</Radio>
-        <Radio value="proxy">Proxy</Radio>
+        <Radio value="bungee">Bungee</Radio>
+        <Radio value="velocity">Velocity</Radio>
         <Radio value="other">Other</Radio>
       </RadioGroup>
 

@@ -82,7 +82,8 @@ export const CreateServer: React.VFC<{ onCreate?: () => void }> = ({ onCreate })
               align="horizontal"
             >
               <Radio value="server">Server</Radio>
-              <Radio value="proxy">Proxy</Radio>
+              <Radio value="bungee">Bungee</Radio>
+              <Radio value="velocity">Velocity</Radio>
               <Radio value="other">Other</Radio>
             </RadioGroup>
 

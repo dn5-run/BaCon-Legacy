@@ -5,7 +5,7 @@ import { ChevronDown, ChevronRight } from 'baseui/icon'
 import { StyledLink } from 'baseui/link'
 import { StyledSpinnerNext } from 'baseui/spinner'
 import { StyledTable, StyledHeadCell, StyledBodyCell } from 'baseui/table-grid'
-import { HeadingLarge } from 'baseui/typography'
+import { HeadingLarge, ParagraphSmall } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
 import { VscTrash } from 'react-icons/vsc'
 
@@ -26,7 +26,7 @@ const Plugin: React.VFC<{
   const [css] = useStyletron()
   const [expanded, setExpanded] = useState(false)
   return (
-    <div role="row" className={css({ display: 'contents' })}>
+    <div role="row" className={css({ display: 'contents', maxWidth: '100%' })}>
       <CenteredBodyCell $striped={striped}>
         <Button
           size="compact"
@@ -46,7 +46,7 @@ const Plugin: React.VFC<{
         <>{plugin.fileName}</>
       </CenteredBodyCell>
       <CenteredBodyCell $striped={striped}>{Math.round((plugin.fileSize / 1024 / 1024) * 10) / 10} MB</CenteredBodyCell>
-      {expanded && plugin.yaml && (
+      {expanded && plugin.meta && (
         <div className={css({ gridColumn: 'span 2', padding: '32px 24px' })}>
           <StyledTable $gridTemplateColumns="1fr 1fr 1fr 1fr 1fr">
             <div role="row" className={css({ display: 'contents' })}>
@@ -57,13 +57,13 @@ const Plugin: React.VFC<{
               <StyledHeadCell>Website</StyledHeadCell>
             </div>
             <div role="row" className={css({ display: 'contents' })}>
-              <StyledBodyCell>{plugin.yaml.name}</StyledBodyCell>
-              <StyledBodyCell>{plugin.yaml.description}</StyledBodyCell>
-              <StyledBodyCell>{plugin.yaml.version}</StyledBodyCell>
-              <StyledBodyCell>{plugin.yaml.author ?? plugin.yaml.authors?.join(', ')}</StyledBodyCell>
+              <StyledBodyCell>{plugin.meta.name}</StyledBodyCell>
+              <StyledBodyCell>{plugin.meta.description}</StyledBodyCell>
+              <StyledBodyCell>{plugin.meta.version}</StyledBodyCell>
+              <StyledBodyCell>{plugin.meta.author ?? plugin.meta.authors?.join(', ')}</StyledBodyCell>
               <StyledBodyCell>
-                <StyledLink href={plugin.yaml.website} target="_blank">
-                  {plugin.yaml.website}
+                <StyledLink href={plugin.meta.website} target="_blank">
+                  {plugin.meta.website}
                 </StyledLink>
               </StyledBodyCell>
             </div>
