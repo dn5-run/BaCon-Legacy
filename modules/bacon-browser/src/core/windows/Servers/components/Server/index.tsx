@@ -48,10 +48,14 @@ export const ServerFC: React.VFC<ServerProps> = ({ server }) => {
         }}
         activateOnFocus
         orientation="horizontal"
+        overrides={{
+          TabList: {
+            style: ({ $theme }) => ({
+              backgroundColor: $theme.colors.backgroundPrimary,
+            })
+          }
+        }}
       >
-        {/* <Tab title="Summary" overrides={TabOverrides}>
-          <Summary server={server} />
-        </Tab> */}
         <Tab title="Console" overrides={TabOverrides}>
           <Console server={server} />
         </Tab>

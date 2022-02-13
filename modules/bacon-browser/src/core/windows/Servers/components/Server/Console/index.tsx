@@ -8,7 +8,7 @@ import { ServerProps } from '../../..'
 
 const ConsoleContainer = styled('div', ({ $theme }) => ({
   backgroundColor: $theme.colors.backgroundAlt,
-  height: '70vh',
+  height: '65vh',
   width: '100%',
   overflowY: 'auto',
   overflowX: 'hidden',

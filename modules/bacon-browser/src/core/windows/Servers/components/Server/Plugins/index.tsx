@@ -11,7 +11,7 @@ import { VscTrash } from 'react-icons/vsc'
 
 import { ServerProps } from '../../..'
 import { showConfirmation } from '../../../../../components/Confirmation'
-import { Serverw } from '../../../ClientWrapper'
+import { Serverw } from '../../../ServerWrapper'
 
 const CenteredBodyCell = withStyle(StyledBodyCell, {
   display: 'flex',
@@ -105,11 +105,19 @@ export const Plugins: React.VFC<ServerProps> = ({ server }) => {
           })}
         </StyledTable>
       ) : (
-        <>
+        <div
+          className={css({
+            height: '75vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          })}
+        >
           <HeadingLarge>
-            Loading... <StyledSpinnerNext />
+            Loading...
           </HeadingLarge>
-        </>
+          <StyledSpinnerNext />
+        </div>
       )}
     </div>
   )
