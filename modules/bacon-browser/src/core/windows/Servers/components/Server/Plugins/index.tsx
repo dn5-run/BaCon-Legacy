@@ -113,9 +113,7 @@ export const Plugins: React.VFC<ServerProps> = ({ server }) => {
             justifyContent: 'center',
           })}
         >
-          <HeadingLarge>
-            Loading...
-          </HeadingLarge>
+          <HeadingLarge>Loading...</HeadingLarge>
           <StyledSpinnerNext />
         </div>
       )}

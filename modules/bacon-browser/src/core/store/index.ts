@@ -1,4 +1,5 @@
 import { Client } from 'bacon-client'
+
 import { ClientW } from './ClientWrapper'
 
 interface StoreType {

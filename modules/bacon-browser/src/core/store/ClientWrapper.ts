@@ -1,5 +1,3 @@
-import { Client } from "bacon-client";
+import { Client } from 'bacon-client'
 
-export class ClientW extends Client {
-    
-}
+export class ClientW extends Client {}

@@ -1,5 +1,6 @@
 import Branca from 'branca'
 import contentDisposition from 'content-disposition'
+import cors from 'cors'
 import express, { RequestHandler, Router } from 'express'
 import session from 'express-session'
 import fs from 'fs-extra'
@@ -7,11 +8,11 @@ import http from 'http'
 import multer from 'multer'
 import fetch from 'node-fetch'
 import path from 'path'
-import cors from 'cors'
 
 import { args, isDev } from '..'
 import { Constants } from '../Constants'
 import { Core } from '../core'
+import { config } from '../core/Configuration'
 import { serverSoftManager } from '../core/system/Independent/ServerSoftManager'
 import { Dev } from '../dev'
 import { SessionStore } from '../store/SessionStore'
@@ -19,7 +20,6 @@ import { Logger } from '../util/Logger'
 import { Authenticator } from './Auth/Authenticator'
 import { IO } from './io'
 import { SessionData } from './io/SessionData'
-import { config } from '../core/Configuration'
 
 const branca = Branca(config.brancaSecret)
 
@@ -114,7 +114,7 @@ export class ApiServer {
                 return res.status(401).send('Unauthorized')
             }
         })
-        router.get("/user", (req, res) => {
+        router.get('/user', (req, res) => {
             const token = req.session.token
             if (!token) return res.status(401).send('Unauthorized')
 

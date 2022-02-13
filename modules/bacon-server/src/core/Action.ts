@@ -12,7 +12,7 @@ export class Action<
     constructor(
         public readonly id: ActionName,
         public readonly permission: Permission | ((...args: Args) => Permission) | undefined,
-        private readonly handler: HandlerType
+        private readonly handler: HandlerType,
     ) {}
 
     public execute(sender: User, args: Args) {
