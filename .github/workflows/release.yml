@@ -45,10 +45,11 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
+      - uses: actions/checkout@v2
+
       - name: Build the application
         uses: ./.github/actions/build
 
-      ##ActionRelease - zip
       - uses: actions/upload-artifact@v1
         name: Action-Upload-Ubuntu
         if: matrix.os == 'ubuntu-latest'
