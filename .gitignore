@@ -1,0 +1,9 @@
+#root
+/.vscode
+/.yarn/*
+!/.yarn/releases
+
+# global
+node_modules/
+dist/
+product/
