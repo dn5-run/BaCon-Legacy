@@ -1,9 +1,6 @@
-import { ServerStatusDetail } from '.'
 import { MinecraftServerType, PluginType, ServerProperties, ServerSoft, ServerStatus } from './Minecraft'
 
 export interface Actions {
-    GET_STATUS: () => typeof ServerStatusDetail[number]
-
     USER_CREATE: (username: string, password: string, permissions: string[], roles?: string[]) => string
     USER_DELETE: (username: string) => string
     USER_UPDATE: (username: string, password?: string, permissions?: string[], roles?: string[]) => string
