@@ -6,38 +6,9 @@ on:
       - 'v*'
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-
-    steps:
-      ##Tag Number input
-      - name: Get latest release version tag number
-        id: get_version
-        uses: battila7/get-version-action@v2
-
-      ##ReleaseChannel - go!
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.get_version.outputs.version }}
-          release_name: SasaLauncher - ${{ steps.get_version.outputs.version }}
-          body: '${{ steps.get_version.outputs.version }} release'
-          draft: false
-          prerelease: false
-
 
   build:
-    runs-on: ${{ matrix.os }}
-
-    needs:
-      - release
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Context
@@ -50,16 +21,13 @@ jobs:
       - name: Build the application
         uses: ./.github/actions/build
 
-      - uses: actions/upload-artifact@v1
-        name: Action-Upload-Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: Product
-          path: product
-
-      - uses: AButler/upload-release-assets@v2.0
-        name: Upload Release File - Ubuntu
-        with:
-          files: product/BaCon-linux;product/BaCon-macos;product/BaCon-win.exe
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          release-tag: ${{ steps.get_version.outputs.version }}
+          files: |
+            product/BaCon-linux
+            product/BaCon-macos
+            product/BaCon-win.exe
+          body: '# ${{ steps.get_version.outputs.version }} release'
+        
