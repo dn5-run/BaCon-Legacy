@@ -1,5 +1,5 @@
 import { styled } from 'baseui'
-import { AppNavBar, NavItemT } from 'baseui/app-nav-bar'
+import { AppNavBar, NavItemT, setItemActive } from 'baseui/app-nav-bar'
 import React, { isValidElement, useState } from 'react'
 
 import { Confirmation, showConfirmation } from './components/Confirmation'
@@ -19,15 +19,17 @@ export const Main: React.VFC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(store.client.isAuthorized)
   const [online, setOnline] = useState(false)
   const [content, setContent] = useState<React.ReactNode>(<Servers />)
-  const [mainItems] = useState<NavItemT[]>([
-    { label: 'Servers', info: <Servers /> },
-    { label: 'ServerSoft', info: <ServerSoftList /> },
+  const [mainItems, setMainItems] = useState<NavItemT[]>([
+    { label: 'Servers', info: { node: <Servers /> } },
+    { label: 'ServerSoft', info: { node: <ServerSoftList /> } },
     {
       label: 'Logout',
-      info: async () => {
-        if (!(await showConfirmation('Logout', 'Are you sure you want to logout?'))) return
-        await store.client.logout()
-        setIsLoggedIn(false)
+      info: {
+        action: async () => {
+          if (!(await showConfirmation('Logout', 'Are you sure you want to logout?'))) return
+          await store.client.logout()
+          setIsLoggedIn(false)
+        },
       },
     },
   ])
@@ -42,9 +44,10 @@ export const Main: React.VFC = () => {
         title="BaCon"
         mainItems={mainItems}
         onMainItemSelect={(item) => {
+          setMainItems((prev) => setItemActive(prev, item))
           if (isLoggedIn) {
-            if (isValidElement(item.info)) setContent(item.info)
-            if (typeof item.info === 'function') item.info()
+            if (isValidElement(item.info.node)) setContent(item.info.node)
+            if (typeof item.info.action === 'function') item.info.action()
           } else showNotification('You are not logged in.', 'warning')
         }}
       />
