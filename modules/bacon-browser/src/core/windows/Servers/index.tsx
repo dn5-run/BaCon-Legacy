@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { styled } from 'styletron-react'
 
 import { store } from '../../store'
-import { Serverw } from './ClientWrapper'
+import { Serverw } from './ServerWrapper'
 import { CreateServer } from './components/CreateServer'
 import { ServerFC } from './components/Server'
 import { ServerCard } from './components/ServerCard'
