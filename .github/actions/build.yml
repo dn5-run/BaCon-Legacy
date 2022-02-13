@@ -1,0 +1,27 @@
+name: "Build"
+description: "Build the application"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Checkout"
+      uses: actions/checkout@v2
+
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "16"
+
+    ##Tag Number input
+    - name: Get latest release version tag number
+      id: get_version
+      uses: battila7/get-version-action@v2
+
+    - name: YARN install
+      shell: bash
+      run: yarn install
+
+    ##build
+    - name: YARN Build
+      shell: bash
+      run: yarn build
