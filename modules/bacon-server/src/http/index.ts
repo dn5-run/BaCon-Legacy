@@ -7,8 +7,9 @@ import http from 'http'
 import multer from 'multer'
 import fetch from 'node-fetch'
 import path from 'path'
+import cors from 'cors'
 
-import { isDev } from '..'
+import { args, isDev } from '..'
 import { Constants } from '../Constants'
 import { Core } from '../core'
 import { serverSoftManager } from '../core/system/Independent/ServerSoftManager'
@@ -18,8 +19,9 @@ import { Logger } from '../util/Logger'
 import { Authenticator } from './Auth/Authenticator'
 import { IO } from './io'
 import { SessionData } from './io/SessionData'
+import { config } from '../core/Configuration'
 
-const branca = Branca('49824bebd4b395e520ad780d644ff27caac39caccab02348b25a6af4f606e326')
+const branca = Branca(config.brancaSecret)
 
 export class ApiServer {
     private readonly app = express()
@@ -31,15 +33,16 @@ export class ApiServer {
     constructor(private readonly _core: Core) {
         this.io.attach(this.server)
 
+        this.app.use(cors(config.cors))
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }))
 
         const sessionMid = session({
-            secret: 'secret',
+            secret: config.cookie.secret,
             resave: false,
             saveUninitialized: false,
             cookie: {
-                secure: false,
+                secure: args.ssl || config.ssl,
                 httpOnly: true,
                 maxAge: 1000 * 60 * 60 * 24,
             },
@@ -110,6 +113,15 @@ export class ApiServer {
                 logger.info(`User failed to authenticate with username: ${username}`)
                 return res.status(401).send('Unauthorized')
             }
+        })
+        router.get("/user", (req, res) => {
+            const token = req.session.token
+            if (!token) return res.status(401).send('Unauthorized')
+
+            const session = SessionStore.get(token)
+            if (!session) return res.status(401).send('Unauthorized')
+
+            res.status(200).send(session.user)
         })
         router.get('/logout', (req, res) => {
             const token = req.session.token

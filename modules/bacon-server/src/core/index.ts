@@ -1,7 +1,5 @@
 import { ServerStatusDetail } from 'bacon-types'
 import fs from 'fs-extra'
-import { JsonDB } from 'node-json-db'
-import path from 'path'
 import { EventEmitter } from 'stream'
 import StrictEventEmitter from 'strict-event-emitter-types'
 
@@ -9,6 +7,7 @@ import { args, isDev } from '..'
 import { Constants } from '../Constants'
 import { ApiServer } from '../http'
 import { Level, Logger } from '../util/Logger'
+import { config } from './Configuration'
 import { PermissionManager } from './system/Auth/PermissionManager'
 import { RoleManager } from './system/Auth/RoleManager'
 import { UserManager } from './system/Auth/UserManager'
@@ -26,7 +25,6 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
     public get status(): typeof ServerStatusDetail[number] {
         return this._status
     }
-    public readonly config = new JsonDB(path.join(Constants.DATA_PATH, 'config'), true, true)
 
     // futures
 
@@ -54,20 +52,14 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
     public async bootstrap() {
         if (!fs.existsSync(Constants.DATA_PATH)) fs.mkdirsSync(Constants.DATA_PATH)
         if (!fs.existsSync(Constants.TEMP_DIR)) fs.mkdirsSync(Constants.TEMP_DIR)
-        this.initConfig()
 
-        this.server.listen(args.port || this.config.getData('/port') || 41180)
+        this.server.listen(args.port || config.port || 41180)
     }
 
     public updateStatus(status: typeof ServerStatusDetail[number]) {
         Logger.get().debug(`Status changed to ${status}`)
         this._status = status
         this.emit('status-update', status)
-    }
-
-    private initConfig() {
-        Logger.get().info('Initializing config...')
-        if (!this.config.exists('/port')) this.config.push('/port', 41180)
     }
 
     public async exit() {
