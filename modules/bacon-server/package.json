@@ -1,7 +1,7 @@
 {
     "name": "bacon-server",
     "scripts": {
-        "dev": "cross-env NODE_ENV='development'  ts-node-dev src"
+        "dev": "cross-env NODE_ENV='development' ts-node-dev src"
     },
     "devDependencies": {
         "@types/adm-zip": "^0.4.34",
@@ -32,6 +32,7 @@
         "branca": "^0.4.0",
         "commander": "^9.0.0",
         "content-disposition": "^0.5.4",
+        "cors": "^2.8.5",
         "express": "^4.17.2",
         "express-session": "^1.17.2",
         "fs-extra": "^10.0.0",

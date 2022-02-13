@@ -1507,6 +1507,7 @@ __metadata:
     branca: ^0.4.0
     commander: ^9.0.0
     content-disposition: ^0.5.4
+    cors: ^2.8.5
     cross-env: ^7.0.3
     express: ^4.17.2
     express-session: ^1.17.2
@@ -2156,7 +2157,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cors@npm:~2.8.5":
+"cors@npm:^2.8.5, cors@npm:~2.8.5":
   version: 2.8.5
   resolution: "cors@npm:2.8.5"
   dependencies:
