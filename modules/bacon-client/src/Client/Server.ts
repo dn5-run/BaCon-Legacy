@@ -3,7 +3,6 @@ import EventEmitter from 'eventemitter3'
 import StrictEventEmitter from 'strict-event-emitter-types'
 
 import { Client } from '.'
-import { fetch } from '../util/fetch'
 
 type Events = {
     log: string
