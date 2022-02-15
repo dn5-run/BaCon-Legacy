@@ -1,7 +1,7 @@
 import { Actions, ArgumentTypes, ClientToServerEvents, MinecraftServerType, ServerStatusDetail, ServerToClientEvents } from 'bacon-types'
 import { io, Socket } from 'socket.io-client'
 
-import { fetch } from '../util/fetch'
+import { ActionHandler } from './ActionHandler'
 import { Server } from './Server'
 
 export class Client {
@@ -20,6 +20,8 @@ export class Client {
         return this._token
     }
 
+    private readonly actionHandler = new ActionHandler(this.handleAction.bind(this))
+
     constructor(address: string, port?: number, ssl?: boolean) {
         this.httpAddress = `${ssl ? 'https' : 'http'}://${address}${port ? `:${port}` : ''}`
         this.ip = address
@@ -36,13 +38,14 @@ export class Client {
         const res = await fetch(`${this.httpAddress}/api/auth/login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 username,
-                password,
-            }),
+                password
+            })
         })
+            
         if (res.status === 200) await this.auth()
         else throw new Error('Invalid username or password')
     }
@@ -71,7 +74,7 @@ export class Client {
         })
     }
 
-    public action<A extends keyof Actions>(action: A, ...args: ArgumentTypes<Actions[A]>) {
+    public handleAction<A extends keyof Actions>(action: A, ...args: ArgumentTypes<Actions[A]>) {
         return new Promise<ReturnType<Actions[A]>>((resolve, reject) => {
             const handler: ServerToClientEvents['action'] = (returnedAction, value) => {
                 if ((returnedAction as string) === action) {
@@ -84,6 +87,10 @@ export class Client {
             this.socket.on('action', handler)
             this.socket.emit('action', action, args)
         })
+    }
+
+    public action<A extends keyof Actions>(action: A, ...args: ArgumentTypes<Actions[A]>) {
+        return this.actionHandler.queue(action, ...args)
     }
 
     public async getStatus(): Promise<typeof ServerStatusDetail[number]> {
