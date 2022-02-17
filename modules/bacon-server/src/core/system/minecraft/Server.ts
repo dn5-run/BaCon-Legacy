@@ -138,8 +138,10 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
 
         /** Create server arguments */
         const customServerArgs = this.customServerArgs.split(' ').map((v) => v.trim())
-        if (this.type === 'server') customServerArgs.concat([`-p${this.port}`, `--nogui`])
-
+        if (this.type === 'server') {
+            customServerArgs.push(`-p${this.port}`)
+            customServerArgs.push(`--nogui`)
+        }
         /** Spawn server process */
         const fullArgs = [...JVMArgs, ...customServerArgs]
 
