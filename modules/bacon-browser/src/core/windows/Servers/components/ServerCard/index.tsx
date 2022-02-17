@@ -1,3 +1,4 @@
+import { Server } from 'bacon-client'
 import { ServerStatus } from 'bacon-types'
 import { styled } from 'baseui'
 import { useStyletron } from 'baseui'
@@ -5,8 +6,8 @@ import { Card } from 'baseui/card'
 import { Table } from 'baseui/table-semantic'
 import React, { createRef, useEffect, useState } from 'react'
 
-import { ServerProps } from '../..'
 import { Accordion, AccordionHeader, AccordionBody } from '../../../../components/Accordion'
+import { ServerContext } from '../Server'
 import { Header } from './Header'
 
 const StyledCard = styled(Card, {
@@ -14,7 +15,7 @@ const StyledCard = styled(Card, {
   transition: 'all 0.3s ease-out',
 })
 
-export const ServerCard: React.VFC<ServerProps> = ({ server }) => {
+export const ServerCard: React.VFC<{ server: Server }> = ({ server }) => {
   const header = createRef<HTMLDivElement>()
   const wrapper = createRef<HTMLDivElement>()
 
@@ -27,55 +28,58 @@ export const ServerCard: React.VFC<ServerProps> = ({ server }) => {
   }, [isOpen])
 
   const [status, setStatus] = useState<ServerStatus>({ status: false })
+  const updateStatus = async () => {
+    const data = await server.getStatus()
+    if (data.status) {
+      data.cpuUsage = Math.round(data.cpuUsage * 10) / 10
+      data.memoryUsage = Math.round((data.memoryUsage / 1024 / 1024) * 10) / 10
+    }
+    setStatus(data)
+  }
   useEffect(() => {
-    ;(async () => {
-      const data = await server.getStatus()
-      if (data.status) {
-        data.cpuUsage = Math.round(data.cpuUsage * 10) / 10
-        data.memoryUsage = Math.round((data.memoryUsage / 1024 / 1024) * 10) / 10
-      }
-      setStatus(data)
-    })()
+    updateStatus()
   }, [])
 
   return (
-    <StyledCard>
-      <div
-        ref={wrapper}
-        className={css({
-          maxHeight,
-          transition: 'all 0.3s ease-out',
-        })}
-      >
-        <Header refObj={header} status={status} server={server} isOpen={isOpen} setIsOpen={setIsOpen} />
+    <ServerContext.Provider value={server}>
+      <StyledCard>
         <div
+          ref={wrapper}
           className={css({
-            marginTop: '25px',
+            maxHeight,
+            transition: 'all 0.3s ease-out',
           })}
         >
-          <Table
-            columns={['', '']}
-            size="compact"
-            data={[
-              ['status', status.status ? 'online' : 'offline'],
-              ['Server type', server.type],
-              ['Server port', server.port],
-            ]}
-            overrides={{
-              TableHeadCell: {
-                style: {
-                  display: 'none',
+          <Header refObj={header} status={status} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <div
+            className={css({
+              marginTop: '25px',
+            })}
+          >
+            <Table
+              columns={['', '']}
+              size="compact"
+              data={[
+                ['status', status.status ? 'online' : 'offline'],
+                ['Server type', server.type],
+                ['Server port', server.port],
+              ]}
+              overrides={{
+                TableHeadCell: {
+                  style: {
+                    display: 'none',
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
         </div>
-      </div>
 
-      <Accordion isOpen={false}>
-        <AccordionHeader></AccordionHeader>
-        <AccordionBody></AccordionBody>
-      </Accordion>
-    </StyledCard>
+        <Accordion isOpen={false}>
+          <AccordionHeader></AccordionHeader>
+          <AccordionBody></AccordionBody>
+        </Accordion>
+      </StyledCard>
+    </ServerContext.Provider>
   )
 }

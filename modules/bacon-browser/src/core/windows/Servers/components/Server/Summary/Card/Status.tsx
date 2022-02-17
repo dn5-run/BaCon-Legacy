@@ -4,8 +4,7 @@ import { ProgressBar } from 'baseui/progress-bar'
 import { ParagraphMedium } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
 import { styled } from 'styletron-react'
-
-import { ServerProps } from '../../../..'
+import { useServer } from '../..'
 
 const StyledCard = styled(Card, {
   width: '100%',
@@ -30,7 +29,8 @@ const StatusItem: React.VFC<{
   )
 }
 
-export const Status: React.VFC<ServerProps> = ({ server }) => {
+export const Status: React.VFC = () => {
+  const [server] = useServer()
   const [css] = useStyletron()
 
   //hooks

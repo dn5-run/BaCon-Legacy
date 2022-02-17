@@ -1,17 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { client } from './BaCon/BaConProvider'
 
 import { _App } from './core/_App'
-import { store } from './core/store'
+export class Main {
 
-class Core {
   constructor() {
     this.init(document.getElementById('root') as HTMLElement)
   }
 
   public async init(parent: HTMLElement) {
     try {
-      await store.client.auth()
+      await client.auth()
     } catch (error) {
       //ignore
     }
@@ -19,7 +19,7 @@ class Core {
   }
 }
 
-new Core()
+new Main()
 
 //eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore

@@ -1,22 +1,32 @@
 import { styled } from 'baseui'
 import { AppNavBar, NavItemT, setItemActive } from 'baseui/app-nav-bar'
-import React, { isValidElement, useState } from 'react'
+import React, { createContext, isValidElement, useContext, useState } from 'react'
 
-import { Confirmation, showConfirmation } from './components/Confirmation'
-import { Notice, showNotification } from './components/Notice'
-import { store } from './store'
+import { useConfirmation } from './components/Confirmation'
 import { Loading } from './windows/Loading'
 import { Login } from './windows/Login'
 import { ServerSoftList } from './windows/ServerSoft'
 import { Servers } from './windows/Servers'
+import { useBaCon } from '../BaCon/BaConProvider'
+import { useNotification } from './components/Notification'
 
 const Container = styled('div', ({ $theme }) => ({
   minHeight: '100vh',
   backgroundColor: $theme.colors.backgroundSecondary,
 }))
 
+const ToggleMainContext = createContext((node:React.ReactNode) => {})
+export const toggleMain = (node:React.ReactNode) => {
+  const setter = useContext(ToggleMainContext)
+  setter(node)
+}
+
 export const Main: React.VFC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(store.client.isAuthorized)
+  const client = useBaCon()
+  const notice = useNotification()
+  const showConfirmation = useConfirmation()
+
+  const [isLoggedIn, setIsLoggedIn] = useState(client.isAuthorized)
   const [online, setOnline] = useState(false)
   const [content, setContent] = useState<React.ReactNode>(<Servers />)
   const [mainItems, setMainItems] = useState<NavItemT[]>([
@@ -27,17 +37,20 @@ export const Main: React.VFC = () => {
       info: {
         action: async () => {
           if (!(await showConfirmation('Logout', 'Are you sure you want to logout?'))) return
-          await store.client.logout()
+          await client.logout()
           setIsLoggedIn(false)
         },
       },
     },
+    {
+      label: 'Test',
+      info: {
+        action: async () => {
+          notice.info('Test', {})
+        }
+      }
+    }
   ])
-
-  toggler = (node) => {
-    setContent(node)
-  }
-
   return (
     <Container>
       <AppNavBar
@@ -48,17 +61,13 @@ export const Main: React.VFC = () => {
           if (isLoggedIn) {
             if (isValidElement(item.info.node)) setContent(item.info.node)
             if (typeof item.info.action === 'function') item.info.action()
-          } else showNotification('You are not logged in.', 'warning')
+          } else notice.warning('You are not logged in.', {})
         }}
       />
 
-      {online ? isLoggedIn ? content : <Login onLogin={() => setIsLoggedIn(true)} /> : <Loading onOnline={() => setOnline(true)} />}
-
-      <Notice />
-      <Confirmation />
+      <ToggleMainContext.Provider value={setContent}>
+        {online ? isLoggedIn ? content : <Login onLogin={() => setIsLoggedIn(true)} /> : <Loading onOnline={() => setOnline(true)} />}
+      </ToggleMainContext.Provider>
     </Container>
   )
 }
-
-let toggler: (content: React.ReactNode) => void
-export const toggleMain = (content: React.ReactNode) => toggler.bind(Main)(content)

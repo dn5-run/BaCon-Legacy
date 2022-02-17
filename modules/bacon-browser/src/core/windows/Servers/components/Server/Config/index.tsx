@@ -7,18 +7,24 @@ import { RadioGroup, Radio } from 'baseui/radio'
 import { Select } from 'baseui/select'
 import { ParagraphMedium } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
+import { useServer } from '..'
 
-import { ServerProps, toggleServer } from '../../..'
-import { showConfirmation } from '../../../../../components/Confirmation'
-import { showNotification } from '../../../../../components/Notice'
-import { store } from '../../../../../store'
+import { useServerToggler } from '../../..'
+import { useBaCon } from '../../../../../../BaCon/BaConProvider'
+import { useConfirmation } from '../../../../../components/Confirmation'
+import { useNotification } from '../../../../../components/Notification'
 
 const Sep = styled('div', {
   width: '100%',
   height: '1rem',
 })
 
-export const Config: React.VFC<ServerProps> = ({ server }) => {
+export const Config: React.VFC = () => {
+  const client = useBaCon()
+  const [server] = useServer()
+  const showConfirmation = useConfirmation()
+  const notice = useNotification()
+
   const [name, setName] = useState(server.name)
   const [type, setType] = useState<ServerType>(server.type)
   const [dir, setDir] = useState(server.dir)
@@ -32,9 +38,11 @@ export const Config: React.VFC<ServerProps> = ({ server }) => {
   const [customServerArgs, setCustomServerArgs] = useState(server.customServerArgs)
   const [autoStart, setAutoStart] = useState(server.autoStart)
 
+  const toggleServer = useServerToggler()
+
   useEffect(() => {
     ;(async () => {
-      setSoftList(await store.client.getServerSofts())
+      setSoftList(await client.getServerSofts())
     })()
   }, [])
 
@@ -117,9 +125,9 @@ export const Config: React.VFC<ServerProps> = ({ server }) => {
               customServerArgs,
               autoStart,
             })
-            showNotification('Saved the server configuration.', 'positive')
+            notice.positive('Saved the server configuration.', {})
           } catch (error) {
-            showNotification(typeof error === 'string' ? error : 'An error has occurred.', 'negative')
+            notice.negative(typeof error === 'string' ? error : 'An error has occurred.', {})
             console.error(error)
           }
         }}
@@ -131,11 +139,11 @@ export const Config: React.VFC<ServerProps> = ({ server }) => {
         onClick={async () => {
           try {
             if (!(await showConfirmation(`Delete server ${name}`, 'Are you sure you want to delete this? There is no undo'))) return
-            await store.client.deleteServer(server.name)
-            showNotification('Deleted the server.', 'positive')
+            await client.deleteServer(server.name)
+            notice.positive('Deleted the server.', {})
             toggleServer()
           } catch (error) {
-            showNotification(typeof error === 'string' ? error : 'An error has occurred.', 'negative')
+            notice.negative(typeof error === 'string' ? error : 'An error has occurred.', {})
           }
         }}
       >

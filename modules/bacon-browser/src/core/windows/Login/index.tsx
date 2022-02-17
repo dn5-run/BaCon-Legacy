@@ -3,9 +3,9 @@ import { Button } from 'baseui/button'
 import { Input } from 'baseui/input'
 import { HeadingLarge } from 'baseui/typography'
 import React, { useState } from 'react'
+import { useBaCon } from '../../../BaCon/BaConProvider'
 
-import { showNotification } from '../../components/Notice'
-import { store } from '../../store'
+import { useNotification } from '../../components/Notification'
 
 const Container = styled('div', {
   display: 'flex',
@@ -34,6 +34,9 @@ const Block = styled('div', ({ $theme }) => {
 export const Login: React.VFC<{
   onLogin: () => void
 }> = ({ onLogin }) => {
+  const client = useBaCon()
+  const notice = useNotification()
+  
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -62,10 +65,10 @@ export const Login: React.VFC<{
           onClick={async () => {
             setIsLoading(true)
             try {
-              await store.client.login(username, password)
+              await client.login(username, password)
               onLogin()
             } catch (error) {
-              showNotification('Invalid username or password.', 'warning')
+              notice.warning('Invalid username or password.', {})
               setIsLoading(false)
             }
           }}

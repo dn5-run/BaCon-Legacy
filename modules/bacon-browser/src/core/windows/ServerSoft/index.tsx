@@ -5,20 +5,20 @@ import { StyledHeadCell, StyledTable } from 'baseui/table-grid'
 import { Tabs, Tab } from 'baseui/tabs-motion'
 import React, { Key, useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import { useBaCon } from '../../../BaCon/BaConProvider'
 
-import { store } from '../../store'
 import { Downloader } from './Downloader'
 import { ServerSoftware } from './ServerSoft'
 import { Uploader } from './Uploader'
 
 export const ServerSoftList: React.VFC = () => {
-  const [css] = useStyletron()
+  const client = useBaCon()
 
   const [softList, setSoftList] = useState<ServerSoft[]>([])
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
   const updateSoftList = async () => {
-    const softList = await store.client.getServerSofts()
+    const softList = await client.getServerSofts()
     setSoftList(softList)
   }
 

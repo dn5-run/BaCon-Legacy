@@ -4,6 +4,10 @@ import React from 'react'
 import { Client as Styletron } from 'styletron-engine-atomic'
 import { Provider as StyletronProvider, styled } from 'styletron-react'
 
+import { BaConProvider } from '../BaCon/BaConProvider'
+import { ConfirmationProvider } from './components/Confirmation'
+import { NotificationProvider } from './components/Notification'
+
 ChartJS.register(...registerables)
 const engine = new Styletron()
 
@@ -17,7 +21,13 @@ export const Providers: React.FC = ({ children }) => {
   return (
     <StyletronProvider value={engine}>
       <BaseProvider theme={DarkTheme}>
-        <Container>{children}</Container>
+        <BaConProvider>
+          <NotificationProvider>
+            <ConfirmationProvider>
+              <Container>{children}</Container>
+            </ConfirmationProvider>
+          </NotificationProvider>
+        </BaConProvider>
       </BaseProvider>
     </StyletronProvider>
   )

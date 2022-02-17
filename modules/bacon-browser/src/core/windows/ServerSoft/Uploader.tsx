@@ -53,29 +53,7 @@ export const Uploader: React.VFC<{
           }
           uploadFile(accepted.filter((f) => f.name.endsWith('.jar')))
         }}
-        overrides={{
-          ButtonComponent: {
-            //@ts-ignore
-            BaseButton: {
-              style: {
-                display: isUploading ? 'none' : 'block',
-              },
-            },
-          },
-        }}
       />
-      <br />
-      {/* <Table
-        overrides={{
-          TableHeadCell: {
-            style: {
-              display: 'none',
-            },
-          },
-        }}
-        columns={['', '']}
-        data={files.map((file, i) => [file.name, `${Math.round(file.size / 1024 / 1024 * 10) / 10}MB`])}
-      /> */}
     </div>
   )
 }
