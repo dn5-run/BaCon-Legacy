@@ -15,7 +15,7 @@ export const NotificationProvider: React.FC = ({ children }) => {
               minHeight: '95vh',
               justifyContent: 'flex-start',
               flexDirection: 'column-reverse',
-            }
+            },
           },
         }}
       />

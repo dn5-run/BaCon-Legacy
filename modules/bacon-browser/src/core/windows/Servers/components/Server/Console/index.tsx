@@ -3,6 +3,7 @@ import { Checkbox, LABEL_PLACEMENT } from 'baseui/checkbox'
 import { Input } from 'baseui/input'
 import { ParagraphSmall } from 'baseui/typography'
 import React, { useEffect, useRef, useState } from 'react'
+
 import { useServer } from '..'
 
 const ConsoleContainer = styled('div', ({ $theme }) => ({

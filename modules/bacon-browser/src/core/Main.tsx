@@ -2,21 +2,21 @@ import { styled } from 'baseui'
 import { AppNavBar, NavItemT, setItemActive } from 'baseui/app-nav-bar'
 import React, { createContext, isValidElement, useContext, useState } from 'react'
 
+import { useBaCon } from '../BaCon/BaConProvider'
 import { useConfirmation } from './components/Confirmation'
+import { useNotification } from './components/Notification'
 import { Loading } from './windows/Loading'
 import { Login } from './windows/Login'
 import { ServerSoftList } from './windows/ServerSoft'
 import { Servers } from './windows/Servers'
-import { useBaCon } from '../BaCon/BaConProvider'
-import { useNotification } from './components/Notification'
 
 const Container = styled('div', ({ $theme }) => ({
   minHeight: '100vh',
   backgroundColor: $theme.colors.backgroundSecondary,
 }))
 
-const ToggleMainContext = createContext((node:React.ReactNode) => {})
-export const toggleMain = (node:React.ReactNode) => {
+const ToggleMainContext = createContext((node: React.ReactNode) => {})
+export const toggleMain = (node: React.ReactNode) => {
   const setter = useContext(ToggleMainContext)
   setter(node)
 }
@@ -47,9 +47,9 @@ export const Main: React.VFC = () => {
       info: {
         action: async () => {
           notice.info('Test', {})
-        }
-      }
-    }
+        },
+      },
+    },
   ])
   return (
     <Container>

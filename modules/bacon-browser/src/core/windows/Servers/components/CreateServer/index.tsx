@@ -9,8 +9,8 @@ import { Select } from 'baseui/select'
 import { HeadingMedium, ParagraphMedium } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
 import { VscAdd, VscRemove } from 'react-icons/vsc'
-import { useBaCon } from '../../../../../BaCon/BaConProvider'
 
+import { useBaCon } from '../../../../../BaCon/BaConProvider'
 import { Accordion, AccordionBody, AccordionHeader } from '../../../../components/Accordion'
 import { useNotification } from '../../../../components/Notification'
 

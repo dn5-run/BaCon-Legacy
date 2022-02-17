@@ -3,8 +3,8 @@ import { Button } from 'baseui/button'
 import { Input } from 'baseui/input'
 import { HeadingMedium, HeadingXSmall, ParagraphLarge, ParagraphMedium } from 'baseui/typography'
 import React, { useState } from 'react'
-import { useBaCon } from '../../../BaCon/BaConProvider'
 
+import { useBaCon } from '../../../BaCon/BaConProvider'
 import { useNotification } from '../../components/Notification'
 import { DownloadTask } from './DownloadTask'
 

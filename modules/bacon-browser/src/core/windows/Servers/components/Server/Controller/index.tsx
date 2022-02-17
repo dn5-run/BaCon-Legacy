@@ -3,8 +3,8 @@ import { Button } from 'baseui/button'
 import { ButtonGroup } from 'baseui/button-group'
 import React, { useState } from 'react'
 import { VscArrowLeft } from 'react-icons/vsc'
-import { useServer } from '..'
 
+import { useServer } from '..'
 import { useServerToggler } from '../../..'
 
 export const Controller: React.VFC = () => {
@@ -26,9 +26,7 @@ export const Controller: React.VFC = () => {
       })}
     >
       <ButtonGroup>
-        <Button
-          onClick={() => toggleServer()}
-        >
+        <Button onClick={() => toggleServer()}>
           <VscArrowLeft />
         </Button>
       </ButtonGroup>

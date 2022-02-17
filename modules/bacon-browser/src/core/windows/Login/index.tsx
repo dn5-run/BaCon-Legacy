@@ -3,8 +3,8 @@ import { Button } from 'baseui/button'
 import { Input } from 'baseui/input'
 import { HeadingLarge } from 'baseui/typography'
 import React, { useState } from 'react'
-import { useBaCon } from '../../../BaCon/BaConProvider'
 
+import { useBaCon } from '../../../BaCon/BaConProvider'
 import { useNotification } from '../../components/Notification'
 
 const Container = styled('div', {
@@ -36,7 +36,7 @@ export const Login: React.VFC<{
 }> = ({ onLogin }) => {
   const client = useBaCon()
   const notice = useNotification()
-  
+
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

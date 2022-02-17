@@ -4,6 +4,7 @@ import { Button } from 'baseui/button'
 import { StyledBodyCell } from 'baseui/table-grid'
 import React from 'react'
 import { VscTrash } from 'react-icons/vsc'
+
 import { useBaCon } from '../../../BaCon/BaConProvider'
 import { useConfirmation } from '../../components/Confirmation'
 

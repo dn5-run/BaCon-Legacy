@@ -4,6 +4,7 @@ import { ProgressBar } from 'baseui/progress-bar'
 import { ParagraphMedium } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
 import { styled } from 'styletron-react'
+
 import { useServer } from '../..'
 
 const StyledCard = styled(Card, {
