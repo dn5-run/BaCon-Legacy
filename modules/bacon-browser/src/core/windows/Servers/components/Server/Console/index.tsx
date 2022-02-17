@@ -4,7 +4,7 @@ import { Input } from 'baseui/input'
 import { ParagraphSmall } from 'baseui/typography'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { ServerProps } from '../../..'
+import { useServer } from '..'
 
 const ConsoleContainer = styled('div', ({ $theme }) => ({
   backgroundColor: $theme.colors.backgroundAlt,
@@ -14,7 +14,8 @@ const ConsoleContainer = styled('div', ({ $theme }) => ({
   overflowX: 'hidden',
 }))
 
-export const Console: React.VFC<ServerProps> = ({ server }) => {
+export const Console: React.VFC = () => {
+  const [server] = useServer()
   const ref = useRef<HTMLDivElement>(null)
   const [logStr, setLogStr] = useState<string[]>([])
   const [autoScroll, setAutoScroll] = useState(true)

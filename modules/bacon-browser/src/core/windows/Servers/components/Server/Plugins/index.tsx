@@ -5,24 +5,24 @@ import { ChevronDown, ChevronRight } from 'baseui/icon'
 import { StyledLink } from 'baseui/link'
 import { StyledSpinnerNext } from 'baseui/spinner'
 import { StyledTable, StyledHeadCell, StyledBodyCell } from 'baseui/table-grid'
-import { HeadingLarge, ParagraphSmall } from 'baseui/typography'
+import { HeadingLarge } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
 import { VscTrash } from 'react-icons/vsc'
 
-import { ServerProps } from '../../..'
-import { showConfirmation } from '../../../../../components/Confirmation'
-import { Serverw } from '../../../ServerWrapper'
+import { useServer } from '..'
+import { useConfirmation } from '../../../../../components/Confirmation'
 
 const CenteredBodyCell = withStyle(StyledBodyCell, {
   display: 'flex',
   alignItems: 'center',
 })
 const Plugin: React.VFC<{
-  server: Serverw
   plugin: PluginType
   striped: boolean
   onDelete?: () => void | Promise<void>
-}> = ({ server, plugin, striped, onDelete }) => {
+}> = ({ plugin, striped, onDelete }) => {
+  const [server] = useServer()
+  const showConfirmation = useConfirmation()
   const [css] = useStyletron()
   const [expanded, setExpanded] = useState(false)
   return (
@@ -74,7 +74,9 @@ const Plugin: React.VFC<{
   )
 }
 
-export const Plugins: React.VFC<ServerProps> = ({ server }) => {
+export const Plugins: React.VFC = () => {
+  const [server] = useServer()
+
   const [css] = useStyletron()
   const [plugins, setPlugins] = useState<PluginType[] | null>(null)
 
@@ -101,7 +103,7 @@ export const Plugins: React.VFC<ServerProps> = ({ server }) => {
           </div>
           {plugins.map((plugin, i) => {
             const striped = i % 2 === 0
-            return <Plugin key={i} server={server} plugin={plugin} striped={striped} onDelete={updatePlugins} />
+            return <Plugin key={i} plugin={plugin} striped={striped} onDelete={updatePlugins} />
           })}
         </StyledTable>
       ) : (

@@ -38,14 +38,14 @@ export class Client {
         const res = await fetch(`${this.httpAddress}/api/auth/login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 username,
-                password
-            })
+                password,
+            }),
         })
-            
+
         if (res.status === 200) await this.auth()
         else throw new Error('Invalid username or password')
     }

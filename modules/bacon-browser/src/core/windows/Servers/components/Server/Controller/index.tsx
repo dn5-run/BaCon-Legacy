@@ -4,29 +4,29 @@ import { ButtonGroup } from 'baseui/button-group'
 import React, { useState } from 'react'
 import { VscArrowLeft } from 'react-icons/vsc'
 
-import { ServerProps, toggleServer } from '../../..'
+import { useServer } from '..'
+import { useServerToggler } from '../../..'
 
-export const Controller: React.VFC<ServerProps> = ({ server }) => {
+export const Controller: React.VFC = () => {
+  const [server, startServer, stopServer] = useServer()
   const [css] = useStyletron()
 
   const [startIsLoading, setStartIsLoading] = useState(false)
   const [stopIsLoading, setStopIsLoading] = useState(false)
   const [restartIsLoading, setRestartIsLoading] = useState(false)
+
+  const toggleServer = useServerToggler()
+
   return (
     <div
       className={css({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        // margin: '1rem',
       })}
     >
       <ButtonGroup>
-        <Button
-          onClick={() => {
-            toggleServer()
-          }}
-        >
+        <Button onClick={() => toggleServer()}>
           <VscArrowLeft />
         </Button>
       </ButtonGroup>
@@ -44,7 +44,7 @@ export const Controller: React.VFC<ServerProps> = ({ server }) => {
           disabled={startIsLoading}
           onClick={async () => {
             setStartIsLoading(true)
-            await server.start()
+            await startServer()
             setStartIsLoading(false)
           }}
         >
@@ -55,7 +55,7 @@ export const Controller: React.VFC<ServerProps> = ({ server }) => {
           disabled={stopIsLoading}
           onClick={async () => {
             setStopIsLoading(true)
-            await server.stop()
+            await stopServer()
             setStopIsLoading(false)
           }}
         >
@@ -66,7 +66,8 @@ export const Controller: React.VFC<ServerProps> = ({ server }) => {
           disabled={restartIsLoading}
           onClick={async () => {
             setRestartIsLoading(true)
-            await server.restart()
+            await stopServer()
+            await startServer()
             setRestartIsLoading(false)
           }}
         >

@@ -4,13 +4,16 @@ import { Input } from 'baseui/input'
 import { HeadingMedium, HeadingXSmall, ParagraphLarge, ParagraphMedium } from 'baseui/typography'
 import React, { useState } from 'react'
 
-import { showNotification } from '../../components/Notice'
-import { store } from '../../store'
+import { useBaCon } from '../../../BaCon/BaConProvider'
+import { useNotification } from '../../components/Notification'
 import { DownloadTask } from './DownloadTask'
 
 export const Downloader: React.VFC<{
   onDownloaded?: () => void
 }> = ({ onDownloaded }) => {
+  const client = useBaCon()
+  const notice = useNotification()
+
   const [css] = useStyletron()
   const [tasks, setTasks] = useState<string[]>([])
   const [name, setName] = useState('')
@@ -42,7 +45,7 @@ export const Downloader: React.VFC<{
                 setMime(info.mime)
               } catch (error) {
                 console.error(error)
-                showNotification('Failed to query url.', 'negative')
+                notice.negative('Failed to query url.', {})
               }
               setQueryButtonIsLoading(false)
             }}
@@ -88,7 +91,7 @@ export const Downloader: React.VFC<{
         </div>
         <Button
           onClick={async () => {
-            await store.client.downloadServerSoft(url, name)
+            await client.downloadServerSoft(url, name)
             setTasks((tasks) => [...tasks, name])
           }}
         >

@@ -2,12 +2,14 @@ import { isProgressStatusData, SystemStatusData } from 'bacon-types'
 import { ProgressBar } from 'baseui/progress-bar'
 import React, { useEffect } from 'react'
 
-import { store } from '../../store'
+import { useBaCon } from '../../../BaCon/BaConProvider'
 
 export const DownloadTask: React.VFC<{
   name: string
   onComplete?: () => void
 }> = ({ name, onComplete }) => {
+  const client = useBaCon()
+
   const [total, setTotal] = React.useState(0)
   const [current, setCurrent] = React.useState(0)
   const [progress, setProgress] = React.useState(0)
@@ -21,9 +23,9 @@ export const DownloadTask: React.VFC<{
         setProgress(Math.round((status.data.current / status.data.total) * 100))
       }
     }
-    store.client.socket.on('status', handler)
+    client.socket.on('status', handler)
     return () => {
-      store.client.socket.off('status', handler)
+      client.socket.off('status', handler)
     }
   }, [])
   return (

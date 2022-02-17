@@ -1,15 +1,15 @@
+import { Server } from 'bacon-client'
 import { useStyletron } from 'baseui'
 import { Tab, TabOverrides, Tabs } from 'baseui/tabs-motion'
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useNotification } from '../../../../components/Notification'
 
-import { ServerProps } from '../..'
 import { Config } from './Config'
 import { Console } from './Console'
 import { Controller } from './Controller'
 import { Plugins } from './Plugins'
-import { Summary } from './Summary'
 
-const TabOverrides: TabOverrides = {
+const tabOverrides: TabOverrides = {
   TabPanel: {
     style: {
       maxHeight: '75vh',
@@ -18,14 +18,36 @@ const TabOverrides: TabOverrides = {
   }
 }
 
-export const ServerFC: React.VFC<ServerProps> = ({ server }) => {
-  const [css] = useStyletron()
+export const ServerContext = createContext({} as Server)
+export const useServer = () => {
+  const server = useContext(ServerContext)
+  const notice = useNotification()
+  const start = async () => {
+    try {
+      await server.start()
+      notice.positive('Server started', {})
+    } catch (error) {
+      notice.negative(typeof error === 'string' ? error : 'Failed to start the server.' , {})
+    }
+  }
+  const stop = async () => {
+    try {
+      await server.stop()
+      notice.positive('Server stopped', {})
+    } catch (error) {
+      notice.negative(typeof error === 'string' ? error : 'Failed to stop the server.' , {})
+    }
+  }
+  return [server, start, stop] as const
+}
 
+export const ServerFC: React.VFC<{server: Server}> = ({server}) => {
+  const [css] = useStyletron()
   const [activeKey, setActiveKey] = useState<React.Key>('0')
 
   useEffect(() => {
     const startHandler = () => {
-      setActiveKey('1')
+      setActiveKey('0')
     }
     server.on('preStart', startHandler)
 
@@ -35,12 +57,13 @@ export const ServerFC: React.VFC<ServerProps> = ({ server }) => {
   })
 
   return (
-    <div
+    <ServerContext.Provider value={server}>
+      <div
       className={css({
         margin: '1rem',
       })}
     >
-      <Controller server={server} />
+      <Controller />
       <Tabs
         activeKey={activeKey}
         onChange={({ activeKey }) => {
@@ -56,16 +79,18 @@ export const ServerFC: React.VFC<ServerProps> = ({ server }) => {
           }
         }}
       >
-        <Tab title="Console" overrides={TabOverrides}>
-          <Console server={server} />
+        <Tab title="Console" overrides={tabOverrides}>
+          <Console />
         </Tab>
-        <Tab title="config" overrides={TabOverrides}>
-          <Config server={server} />
+        <Tab title="config" overrides={tabOverrides}>
+          <Config />
         </Tab>
-        <Tab title="plugins" overrides={TabOverrides}>
-          <Plugins server={server} />
+        <Tab title="plugins" overrides={tabOverrides}>
+          <Plugins/>
         </Tab>
       </Tabs>
     </div>
+    </ServerContext.Provider>
+    
   )
 }

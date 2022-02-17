@@ -4,14 +4,18 @@ import { Button } from 'baseui/button'
 import { ButtonGroup } from 'baseui/button-group'
 import { HeadingSmall, ParagraphMedium } from 'baseui/typography'
 import React, { useState } from 'react'
-import { FaServer } from 'react-icons/fa'
 import { VscAdd, VscCircleLargeFilled, VscDebugRestart, VscDebugStart, VscDebugStop, VscRemove, VscTerminal } from 'react-icons/vsc'
 
-import { ServerProps, toggleServer } from '../..'
+import { useServerToggler } from '../..'
+import { useServer } from '../Server'
 
-export const Header: React.VFC<
-  ServerProps & { refObj: React.RefObject<HTMLDivElement>; status: ServerStatus; isOpen: boolean; setIsOpen: (isOpen: boolean) => void }
-> = ({ refObj, status, server, isOpen, setIsOpen }) => {
+export const Header: React.VFC<{
+  refObj: React.RefObject<HTMLDivElement>
+  status: ServerStatus
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}> = ({ refObj, status, isOpen, setIsOpen }) => {
+  const [server, startServer, stopServer] = useServer()
   const [css, theme] = useStyletron()
   const flex = css({
     display: 'flex',
@@ -22,6 +26,8 @@ export const Header: React.VFC<
       flexWrap: 'nowrap',
     },
   })
+
+  const toggleServer = useServerToggler()
 
   const [startIsLoading, setStartIsLoading] = useState(false)
   const [stopIsLoading, setStopIsLoading] = useState(false)
@@ -59,7 +65,7 @@ export const Header: React.VFC<
               isLoading={startIsLoading}
               onClick={async () => {
                 setStartIsLoading(true)
-                await server.start()
+                await startServer()
                 setStartIsLoading(false)
               }}
             >
@@ -69,7 +75,7 @@ export const Header: React.VFC<
               isLoading={stopIsLoading}
               onClick={async () => {
                 setStopIsLoading(true)
-                await server.stop()
+                await stopServer()
                 setStopIsLoading(false)
               }}
             >
@@ -79,7 +85,8 @@ export const Header: React.VFC<
               isLoading={restartIsLoading}
               onClick={async () => {
                 setRestartIsLoading(true)
-                await server.restart()
+                await startServer()
+                await stopServer()
                 setRestartIsLoading(false)
               }}
             >

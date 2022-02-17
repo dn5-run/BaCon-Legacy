@@ -5,8 +5,7 @@
         "modules/*"
     ],
     "scripts": {
-        "format": "yarn prettier:write && yarn eslint:fix",
-        "eslint:fix": "eslint --fix './modules/**/src/**/*.{ts,tsx}'",
+        "format": "yarn prettier:write",
         "prettier:write": "prettier --write './modules/**/src/**/*.{ts,tsx}'",
         "compile": "ts-node ./build.ts compile",
         "build": "ts-node ./build.ts build"

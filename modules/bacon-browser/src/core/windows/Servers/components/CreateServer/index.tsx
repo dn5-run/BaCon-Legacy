@@ -10,9 +10,9 @@ import { HeadingMedium, ParagraphMedium } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
 import { VscAdd, VscRemove } from 'react-icons/vsc'
 
+import { useBaCon } from '../../../../../BaCon/BaConProvider'
 import { Accordion, AccordionBody, AccordionHeader } from '../../../../components/Accordion'
-import { showNotification } from '../../../../components/Notice'
-import { store } from '../../../../store'
+import { useNotification } from '../../../../components/Notification'
 
 const StyledCard = styled(Card, {
   overflow: 'hidden',
@@ -25,6 +25,9 @@ const Sep = styled('div', {
 })
 
 export const CreateServer: React.VFC<{ onCreate?: () => void }> = ({ onCreate }) => {
+  const client = useBaCon()
+  const notice = useNotification()
+
   const [css] = useStyletron()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -47,7 +50,7 @@ export const CreateServer: React.VFC<{ onCreate?: () => void }> = ({ onCreate })
 
   useEffect(() => {
     ;(async () => {
-      setSoftList(await store.client.getServerSofts())
+      setSoftList(await client.getServerSofts())
     })()
   }, [])
 
@@ -167,13 +170,13 @@ export const CreateServer: React.VFC<{ onCreate?: () => void }> = ({ onCreate })
             <Button
               onClick={async () => {
                 try {
-                  await store.client.createServer(config)
-                  showNotification('Server created!', 'positive')
+                  await client.createServer(config)
+                  notice.positive('Server created', {})
                   if (onCreate) onCreate()
                   setIsOpen(false)
                   setConfig(initialConfig)
                 } catch (error) {
-                  showNotification(typeof error === 'string' ? error : 'An error has occurred.', 'negative')
+                  notice.negative(typeof error === 'string' ? error : 'An error has occurred.', {})
                   console.error(error)
                 }
               }}

@@ -4,22 +4,23 @@ import { Spinner } from 'baseui/spinner'
 import { H1, Paragraph1 } from 'baseui/typography'
 import React, { useEffect, useState } from 'react'
 
-import { store } from '../store'
+import { useBaCon } from '../../BaCon/BaConProvider'
 
 export const Loading: React.VFC<{
   onOnline?: () => void
 }> = ({ onOnline }) => {
+  const client = useBaCon()
   const [css, theme] = useStyletron()
   const [status, setStatus] = useState<typeof ServerStatusDetail[number]>()
 
+  const updateStatus = async () => {
+    const status = await client.getStatus()
+    setStatus(status)
+    status === 'online' && onOnline && onOnline()
+  }
   useEffect(() => {
-    const updateStatus = async () => {
-      const status = await store.client.getStatus()
-      status === 'online' && onOnline && onOnline()
-      setStatus(status)
-    }
-    updateStatus()
     const interval = setInterval(updateStatus, 1000)
+    updateStatus()
     return () => {
       clearInterval(interval)
     }

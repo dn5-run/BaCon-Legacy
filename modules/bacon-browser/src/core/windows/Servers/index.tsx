@@ -1,9 +1,9 @@
+import { Server } from 'bacon-client'
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid'
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { styled } from 'styletron-react'
 
-import { store } from '../../store'
-import { Serverw } from './ServerWrapper'
+import { useBaCon } from '../../../BaCon/BaConProvider'
 import { CreateServer } from './components/CreateServer'
 import { ServerFC } from './components/Server'
 import { ServerCard } from './components/ServerCard'
@@ -13,44 +13,39 @@ const StyledFlexGrid = styled(FlexGrid, {
   overflowY: 'auto',
 })
 
-export interface ServerProps {
-  server: Serverw
+const ToggleServerContext = createContext((name?: string) => {})
+export const useServerToggler = () => {
+  return useContext(ToggleServerContext)
 }
 
 export const Servers: React.VFC = () => {
-  const [servers, setServers] = useState<Serverw[]>([])
-  const [currentServer, setCurrentServer] = useState<Serverw | undefined>()
+  const client = useBaCon()
+  const [servers, setServers] = useState<Server[]>([])
+  const [currentServer, setCurrentServer] = useState<string | undefined>()
 
+  const updateServers = async () => setServers(await client.getServers())
   useEffect(() => {
-    ;(async () => {
-      const servers = await store.client.getServers()
-      setServers(Serverw.fromArray(servers, store.client))
-    })()
+    updateServers()
   }, [currentServer])
 
-  toggler = (name?: string) => {
-    setCurrentServer(name ? servers.find((s) => s.name === name) : undefined)
-  }
+  const server = servers.find((s) => s.name === currentServer)
 
-  return currentServer ? (
-    <ServerFC server={currentServer} />
-  ) : (
-    <StyledFlexGrid flexGridColumnCount={[1, 1, 2, 3]} flexGridColumnGap="scale800" flexGridRowGap="scale800">
-      {servers.map((server, index) => (
-        <FlexGridItem width={'calc(100% / 3)'} key={index}>
-          <ServerCard server={server} />
-        </FlexGridItem>
-      ))}
-      <FlexGridItem width={'calc(100% / 3)'} key="create new server">
-        <CreateServer
-          onCreate={async () => {
-            const servers = await store.client.getServers()
-            setServers(Serverw.fromArray(servers, store.client))
-          }}
-        />
-      </FlexGridItem>
-    </StyledFlexGrid>
+  return (
+    <ToggleServerContext.Provider value={setCurrentServer}>
+      {server ? (
+        <ServerFC server={server} />
+      ) : (
+        <StyledFlexGrid flexGridColumnCount={[1, 1, 2, 3]} flexGridColumnGap="scale800" flexGridRowGap="scale800">
+          {servers.map((s, index) => (
+            <FlexGridItem width={'calc(100% / 3)'} key={index}>
+              <ServerCard server={s} />
+            </FlexGridItem>
+          ))}
+          <FlexGridItem width={'calc(100% / 3)'} key="create new server">
+            <CreateServer onCreate={updateServers} />
+          </FlexGridItem>
+        </StyledFlexGrid>
+      )}
+    </ToggleServerContext.Provider>
   )
 }
-let toggler: (name?: string) => void
-export const toggleServer = (name?: string) => toggler(name)
