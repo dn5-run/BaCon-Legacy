@@ -9,7 +9,7 @@ import { Console } from './Console'
 import { Controller } from './Controller'
 import { Plugins } from './Plugins'
 
-const TabOverrides: TabOverrides = {
+const tabOverrides: TabOverrides = {
   TabPanel: {
     style: {
       maxHeight: '75vh',
@@ -79,13 +79,13 @@ export const ServerFC: React.VFC<{server: Server}> = ({server}) => {
           }
         }}
       >
-        <Tab title="Console" overrides={TabOverrides}>
+        <Tab title="Console" overrides={tabOverrides}>
           <Console />
         </Tab>
-        <Tab title="config" overrides={TabOverrides}>
+        <Tab title="config" overrides={tabOverrides}>
           <Config />
         </Tab>
-        <Tab title="plugins" overrides={TabOverrides}>
+        <Tab title="plugins" overrides={tabOverrides}>
           <Plugins/>
         </Tab>
       </Tabs>
