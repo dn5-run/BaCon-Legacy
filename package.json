@@ -1,14 +1,14 @@
 {
     "name": "BaCon",
-    "version": "0.1",
+    "version": "0.3",
     "workspaces": [
         "modules/*"
     ],
     "scripts": {
         "format": "yarn prettier:write",
         "prettier:write": "prettier --write './modules/**/src/**/*.{ts,tsx}'",
-        "compile": "ts-node ./build.ts compile",
-        "build": "ts-node ./build.ts build"
+        "start": "yarn build --no-pack && node dist/server",
+        "build": "ts-node ./run.ts build"
     },
     "bin": {
         "bacon": "./dist/server/index.js"
@@ -26,5 +26,8 @@
         "scripts": "dist/server/**/*.js",
         "assets": "dist/web/**/*",
         "outputPath": "product"
+    },
+    "dependencies": {
+        "commander": "^9.0.0"
     }
 }

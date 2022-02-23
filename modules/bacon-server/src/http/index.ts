@@ -14,7 +14,7 @@ import { Constants } from '../Constants'
 import { Core } from '../core'
 import { config } from '../core/Configuration'
 import { serverSoftManager } from '../core/system/Independent/ServerSoftManager'
-import { Dev } from '../dev'
+import { createViteDevServer } from '../dev/viteDevServer'
 import { SessionStore } from '../store/SessionStore'
 import { Logger } from '../util/Logger'
 import { Authenticator } from './Auth/Authenticator'
@@ -57,11 +57,18 @@ export class ApiServer {
         this.app.use('/api/server', this.minecraft())
         this.app.use('/api/auth', this.auth())
 
-        if (isDev) Dev.webpackDevServer(this.app)
-        if (!isDev) {
-            this.app.get('/main.js', (req, res) => res.sendFile(path.join(Constants.WEB_DIR, 'main.js')))
+        if (isDev) {
+            this.initDev()
+        } else {
+            Logger.get().info('Server is production mode')
             this.app.get('/', (req, res) => res.sendFile(path.join(Constants.WEB_DIR, 'index.html')))
+            this.app.use('/', express.static(Constants.WEB_DIR))
         }
+    }
+
+    private async initDev() {
+        if (isDev) this.app.use((await createViteDevServer()).app)
+        // if (isDev) this.app.use(await createWebpackDevServer())
     }
 
     public listen(port: number) {
@@ -82,7 +89,7 @@ export class ApiServer {
 
     private common() {
         const router = Router()
-        router.get('/status', (req, res) => {
+        router.get('/status', (_, res) => {
             res.status(200).send(this._core.status)
         })
         return router
@@ -182,6 +189,16 @@ export class ApiServer {
             const files = req.files as Express.Multer.File[]
             for (const file of files) {
                 serverSoftManager.addSoft(file.path, file.originalname)
+                fs.removeSync(file.path)
+            }
+            res.status(200).send('OK')
+        })
+        router.post('/upload/plugin/:server', upload.array('files'), (req, res) => {
+            if (!req.files) return res.status(400).send('Bad request')
+            const server = req.params.server
+            const files = req.files as Express.Multer.File[]
+            for (const file of files) {
+                this._core.serverManager.getServer(server)?.addPlugin(file.path, file.originalname)
                 fs.removeSync(file.path)
             }
             res.status(200).send('OK')

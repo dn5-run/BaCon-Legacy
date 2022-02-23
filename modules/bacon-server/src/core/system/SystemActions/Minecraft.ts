@@ -67,7 +67,7 @@ export const MinecraftActions = [
 
     new Action('MINECRAFT_SOFT_DOWNLOAD', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SOFT_DOWNLOAD, (sender, url, name) => {
         if (serverSoftManager.getSofts().filter((soft) => soft.name === name).length > 0) throw new Error('Soft already exists')
-        serverSoftManager.addQueue(url, name)
+        serverSoftManager.download(url, name)
         return 'Download started'
     }),
     new Action('MINECRAFT_SOFT_DELETE', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SOFT_DELETE, (sender, name) => {
@@ -87,6 +87,12 @@ export const MinecraftActions = [
         const server = serverManager.getServer(name)
         server?.saveServerProperties(properties)
         return 'Server properties updated'
+    }),
+    new Action('MINECRAFT_SERVER_DOWNLOAD_PLUGIN', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SERVER_DOWNLOAD_PLUGIN, (sender, servername, url, name) => {
+        const { serverManager } = Core.instance
+        const server = serverManager.getServer(servername)
+        server?.downloadPlugin(url, name)
+        return 'Start download plugin'
     }),
     new Action('MINECRAFT_SERVER_GET_PLUGINS', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SERVER_GET_PLUGINS, (sender, name) => {
         const { serverManager } = Core.instance

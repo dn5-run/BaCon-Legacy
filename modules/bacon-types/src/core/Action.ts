@@ -24,6 +24,7 @@ export interface Actions {
     MINECRAFT_SERVER_COMMAND: (name: string, command: string) => string
     MINECRAFT_SERVER_GET_PROPERTIES: (name: string) => ServerProperties
     MINECRAFT_SERVER_SAVE_PROPERTIES: (name: string, properties: ServerProperties) => string
+    MINECRAFT_SERVER_DOWNLOAD_PLUGIN: (servername: string, url: string, name: string) => string
     MINECRAFT_SERVER_GET_PLUGINS: (name: string) => PluginType[]
     MINECRAFT_SERVER_DELETE_PLUGIN: (name: string, fileName: string) => string
 

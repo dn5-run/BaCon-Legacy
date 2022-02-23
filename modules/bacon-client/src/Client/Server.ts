@@ -113,6 +113,10 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         return this.client.action('MINECRAFT_SERVER_SAVE_PROPERTIES', this.name, properties)
     }
 
+    public downloadPlugin(url: string, name: string) {
+        return this.client.action('MINECRAFT_SERVER_DOWNLOAD_PLUGIN', this.name, url, name)
+    }
+
     public getPlugins() {
         return this.client.action('MINECRAFT_SERVER_GET_PLUGINS', this.name)
     }

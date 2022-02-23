@@ -11,6 +11,7 @@ import { config } from './Configuration'
 import { PermissionManager } from './system/Auth/PermissionManager'
 import { RoleManager } from './system/Auth/RoleManager'
 import { UserManager } from './system/Auth/UserManager'
+import { statusEmitter } from './system/Independent/StatusEmitter'
 import { ServerManager } from './system/minecraft/ServerManager'
 
 type Events = {
@@ -63,6 +64,10 @@ export class Core extends (EventEmitter as new () => StrictEventEmitter<EventEmi
     }
 
     public async exit() {
+        statusEmitter.broadcast({
+            title: 'shutdown',
+            key: 'shutdown',
+        })
         const tasks: Promise<void>[] = []
         for (const s of this.serverManager.getServers()) {
             const status = await s.getStatus()
