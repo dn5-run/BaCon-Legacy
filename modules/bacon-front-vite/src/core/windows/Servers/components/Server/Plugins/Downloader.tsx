@@ -3,18 +3,19 @@ import { Button } from 'baseui/button'
 import { Input } from 'baseui/input'
 import { HeadingMedium, HeadingXSmall, ParagraphLarge, ParagraphMedium } from 'baseui/typography'
 import { useState } from 'react'
+import { useServer } from '..'
 
-import { useBaCon } from '../../../BaCon/BaConProvider'
-import { useNotification } from '../../components/Notification'
+import { useNotification } from '../../../../../components/Notification'
 import { DownloadTask } from './DownloadTask'
 
 export const Downloader: React.VFC<{
   onDownloaded?: () => void
 }> = ({ onDownloaded }) => {
-  const client = useBaCon()
+  const [server] = useServer()
   const notice = useNotification()
 
   const [css] = useStyletron()
+
   const [tasks, setTasks] = useState<string[]>([])
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
@@ -91,7 +92,7 @@ export const Downloader: React.VFC<{
         </div>
         <Button
           onClick={async () => {
-            await client.downloadServerSoft(url, name)
+            await server.downloadPlugin(url, name)
             setTasks((tasks) => [...tasks, name])
           }}
         >
@@ -118,7 +119,6 @@ export const Downloader: React.VFC<{
   )
 }
 
-// get file informations
 const queryURL = async (rawUrl: string) => {
   const url = new URL(rawUrl)
   const res = await fetch(`/api/server/query`, {

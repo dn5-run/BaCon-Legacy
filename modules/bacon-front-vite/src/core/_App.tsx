@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Main } from './Main'
 import { Providers } from './Providers'
 

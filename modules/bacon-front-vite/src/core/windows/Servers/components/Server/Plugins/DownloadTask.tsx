@@ -2,7 +2,8 @@ import { isProgressStatusData, SystemStatusData } from 'bacon-types'
 import { ProgressBar } from 'baseui/progress-bar'
 import { useEffect, useState } from 'react'
 
-import { useBaCon } from '../../../BaCon/BaConProvider'
+import { useServer } from '..'
+import { useBaCon } from '../../../../../../BaCon/BaConProvider'
 
 export const DownloadTask: React.VFC<{
   name: string

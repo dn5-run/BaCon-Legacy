@@ -1,6 +1,5 @@
 import { BaseProvider, DarkTheme } from 'baseui'
 import { Chart as ChartJS, registerables } from 'chart.js'
-import React from 'react'
 import { Client as Styletron } from 'styletron-engine-atomic'
 import { Provider as StyletronProvider, styled } from 'styletron-react'
 

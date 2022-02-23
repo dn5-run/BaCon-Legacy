@@ -3,7 +3,7 @@ import { useStyletron } from 'baseui'
 import { Button } from 'baseui/button'
 import { ButtonGroup } from 'baseui/button-group'
 import { HeadingSmall, ParagraphMedium } from 'baseui/typography'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { VscAdd, VscCircleLargeFilled, VscDebugRestart, VscDebugStart, VscDebugStop, VscRemove, VscTerminal } from 'react-icons/vsc'
 
 import { useServerToggler } from '../..'

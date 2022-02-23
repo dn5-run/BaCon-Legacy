@@ -1,7 +1,7 @@
 import { useStyletron } from 'baseui'
 import { Button } from 'baseui/button'
 import { ButtonGroup } from 'baseui/button-group'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { VscArrowLeft } from 'react-icons/vsc'
 
 import { useServer } from '..'

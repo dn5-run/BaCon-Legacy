@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const Users: React.VFC = () => {
   const [users, setUsers] = useState()

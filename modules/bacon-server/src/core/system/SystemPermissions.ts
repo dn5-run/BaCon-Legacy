@@ -27,6 +27,7 @@ export const SYSTEM_PERMISSIONS = {
     SYSTEM_MINECRAFT_SERVER_COMMAND: new Permission('system.minecraft.server.command'),
     SYSTEM_MINECRAFT_SERVER_GET_PROPERTIES: new Permission('system.minecraft.server.get.properties'),
     SYSTEM_MINECRAFT_SERVER_SAVE_PROPERTIES: new Permission('system.minecraft.server.save.properties'),
+    SYSTEM_MINECRAFT_SERVER_DOWNLOAD_PLUGIN: new Permission('system.minecraft.server.download.plugin'),
     SYSTEM_MINECRAFT_SERVER_GET_PLUGINS: new Permission('system.minecraft.server.get.plugins'),
     SYSTEM_MINECRAFT_SERVER_REMOVE_PLUGIN: new Permission('system.minecraft.server.remove.plugin'),
 

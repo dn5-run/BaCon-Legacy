@@ -1,6 +1,6 @@
 import { styled } from 'baseui'
 import { AppNavBar, NavItemT, setItemActive } from 'baseui/app-nav-bar'
-import React, { createContext, isValidElement, useContext, useState } from 'react'
+import { createContext, isValidElement, useContext, useEffect, useState } from 'react'
 
 import { useBaCon } from '../BaCon/BaConProvider'
 import { useConfirmation } from './components/Confirmation'
@@ -9,6 +9,7 @@ import { Loading } from './windows/Loading'
 import { Login } from './windows/Login'
 import { ServerSoftList } from './windows/ServerSoft'
 import { Servers } from './windows/Servers'
+import { SystemStatusData } from 'bacon-types'
 
 const Container = styled('div', ({ $theme }) => ({
   minHeight: '100vh',
@@ -42,15 +43,24 @@ export const Main: React.VFC = () => {
         },
       },
     },
-    {
-      label: 'Test',
-      info: {
-        action: async () => {
-          notice.info('Test', {})
-        },
-      },
-    },
   ])
+
+  const onShutdown = async () => {
+    client.logout()
+    setIsLoggedIn(false)
+    setOnline(false)
+  }
+  useEffect(() => {
+    const handler =  (status: SystemStatusData) => {
+      status.key === 'shutdown' && onShutdown()
+    }
+    client.socket.on('status',handler)
+
+    return () => {
+      client.socket.off('status',handler)
+    }
+  })
+
   return (
     <Container>
       <AppNavBar

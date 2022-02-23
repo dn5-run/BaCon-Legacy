@@ -2,7 +2,7 @@ import { Button } from 'baseui/button'
 import { ButtonGroup } from 'baseui/button-group'
 import { Card } from 'baseui/card'
 import { ChartData, ChartType } from 'chart.js'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { styled } from 'styletron-react'
 

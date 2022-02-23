@@ -1,7 +1,7 @@
 {
     "name": "bacon-server",
     "scripts": {
-        "dev": "cross-env NODE_ENV='development' ts-node-dev src"
+        "dev": "cross-env NODE_ENV='development' ts-node src"
     },
     "devDependencies": {
         "@types/adm-zip": "^0.4.34",

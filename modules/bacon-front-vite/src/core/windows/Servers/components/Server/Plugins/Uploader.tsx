@@ -3,10 +3,12 @@ import { FileUploader } from 'baseui/file-uploader'
 import { toaster } from 'baseui/toast'
 import { H2 } from 'baseui/typography'
 import { useState } from 'react'
+import { useServer } from '..'
 
 export const Uploader: React.VFC<{
   onUploaded?: (result: boolean) => void
 }> = ({ onUploaded }) => {
+  const [server] = useServer()
   const [css] = useStyletron()
   const [isUploading, setIsUploading] = useState(false)
 
@@ -20,7 +22,7 @@ export const Uploader: React.VFC<{
 
     for (const v of files) {
       if(!v.name.endsWith('.jar')) {
-        toaster.negative(`${v.name} is not a valid plugin`, {})
+        toaster.negative(`${v.name} is not a valid file`, {})
         continue
       }
       formData.append('files', v)
@@ -29,7 +31,7 @@ export const Uploader: React.VFC<{
       setIsUploading(false)
       return
     }
-    const res = await fetch('/api/server/upload/serversoft', {
+    const res = await fetch(`/api/server/upload/plugin/${server.name}`, {
       method: 'POST',
       body: formData,
     })
@@ -54,7 +56,7 @@ export const Uploader: React.VFC<{
       <br />
       <FileUploader
         progressMessage={isUploading ? `Uploading...` : ''}
-        onDropAccepted={(accepted, rejected) => {
+        onDropAccepted={(accepted) => {
           uploadFile(accepted)
         }}
       />

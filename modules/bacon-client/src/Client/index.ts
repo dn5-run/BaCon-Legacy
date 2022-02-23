@@ -51,10 +51,10 @@ export class Client {
     }
 
     public async logout() {
+        this._isAuthorized = false
         const res = await fetch(`${this.httpAddress}/api/auth/logout`)
         this.socket.close()
-        if (res.status === 200) this._isAuthorized = false
-        else throw new Error(await res.text())
+        if (res.status !== 200) throw new Error(await res.text())
     }
 
     public auth() {

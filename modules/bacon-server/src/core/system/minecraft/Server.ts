@@ -10,6 +10,7 @@ import StrictEventEmitter from 'strict-event-emitter-types'
 
 import { Constants } from '../../../Constants'
 import { Logger } from '../../../util/Logger'
+import { fileDownloader } from '../Independent/FileDownloader'
 import { javaManager } from '../Independent/Java'
 import { serverSoftManager } from '../Independent/ServerSoftManager'
 import { statusEmitter } from '../Independent/StatusEmitter'
@@ -232,6 +233,16 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
             .readdirSync(path.join(this.dir, 'plugins'))
             .filter((file) => file.endsWith('.jar'))
             .map((file) => new Plugin(path.join(this.dir, 'plugins', file), this.type))
+    }
+
+    public downloadPlugin(url: string, name: string) {
+        fileDownloader.download(url, name, path.join(this.dir, 'plugins'))
+    }
+
+    public addPlugin(filepath: string, originalname?: string){
+        if (!fs.existsSync(filepath)) throw new Error('Plugin not found')
+        if (!fs.existsSync(path.join(this.dir, 'plugins'))) fs.mkdirSync(path.join(this.dir, 'plugins'))
+        fs.copyFileSync(filepath, path.join(this.dir, 'plugins', originalname || path.basename(filepath)))
     }
 
     public deletePlugin(fileName: string) {

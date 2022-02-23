@@ -2,7 +2,7 @@ import { styled } from 'baseui'
 import { Checkbox, LABEL_PLACEMENT } from 'baseui/checkbox'
 import { Input } from 'baseui/input'
 import { ParagraphSmall } from 'baseui/typography'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useServer } from '..'
 

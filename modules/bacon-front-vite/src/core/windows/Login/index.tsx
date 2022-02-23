@@ -2,7 +2,7 @@ import { styled } from 'baseui'
 import { Button } from 'baseui/button'
 import { Input } from 'baseui/input'
 import { HeadingLarge } from 'baseui/typography'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { useBaCon } from '../../../BaCon/BaConProvider'
 import { useNotification } from '../../components/Notification'

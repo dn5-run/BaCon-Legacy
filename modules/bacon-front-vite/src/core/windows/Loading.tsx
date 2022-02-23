@@ -2,7 +2,7 @@ import { ServerStatusDetail } from 'bacon-types'
 import { useStyletron } from 'baseui'
 import { Spinner } from 'baseui/spinner'
 import { H1, Paragraph1 } from 'baseui/typography'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useBaCon } from '../../BaCon/BaConProvider'
 
@@ -14,9 +14,13 @@ export const Loading: React.VFC<{
   const [status, setStatus] = useState<typeof ServerStatusDetail[number]>()
 
   const updateStatus = async () => {
-    const status = await client.getStatus()
-    setStatus(status)
-    status === 'online' && onOnline && onOnline()
+    try {
+      const status = await client.getStatus()
+      setStatus(status)
+      status === 'online' && onOnline && onOnline()
+    } catch (error) {
+      setStatus('offline')
+    }
   }
   useEffect(() => {
     const interval = setInterval(updateStatus, 1000)

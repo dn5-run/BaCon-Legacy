@@ -1,6 +1,6 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, SIZE, ROLE } from 'baseui/modal'
 import { ParagraphMedium } from 'baseui/typography'
-import React, { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 const ConfirmationContext = createContext((title: string, msg: string) => {
   return new Promise((resolve, reject) => {

@@ -4,7 +4,7 @@ import { styled } from 'baseui'
 import { useStyletron } from 'baseui'
 import { Card } from 'baseui/card'
 import { Table } from 'baseui/table-semantic'
-import React, { createRef, useEffect, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 
 import { Accordion, AccordionHeader, AccordionBody } from '../../../../components/Accordion'
 import { ServerContext } from '../Server'

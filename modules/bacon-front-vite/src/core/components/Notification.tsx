@@ -1,5 +1,5 @@
 import { toaster, ToasterContainer } from 'baseui/toast'
-import React, { createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
 
 const NotificationContext = createContext(toaster)
 export const useNotification = () => useContext(NotificationContext)

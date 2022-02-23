@@ -7,7 +7,7 @@ import { Input } from 'baseui/input'
 import { RadioGroup, Radio } from 'baseui/radio'
 import { Select } from 'baseui/select'
 import { HeadingMedium, ParagraphMedium } from 'baseui/typography'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { VscAdd, VscRemove } from 'react-icons/vsc'
 
 import { useBaCon } from '../../../../../BaCon/BaConProvider'

@@ -1,5 +1,6 @@
 import { useStyletron } from 'baseui'
-import React, { createRef, isValidElement, useEffect, useState } from 'react'
+import React from 'react'
+import { createRef, isValidElement, useEffect, useState } from 'react'
 
 import { AccordionBody } from './AccordionBody'
 import { AccordionHeader } from './AccordionHeader'

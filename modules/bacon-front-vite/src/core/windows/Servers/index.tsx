@@ -1,6 +1,6 @@
 import { Server } from 'bacon-client'
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { styled } from 'styletron-react'
 
 import { useBaCon } from '../../../BaCon/BaConProvider'

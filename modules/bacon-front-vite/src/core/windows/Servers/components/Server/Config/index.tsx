@@ -6,7 +6,7 @@ import { Input } from 'baseui/input'
 import { RadioGroup, Radio } from 'baseui/radio'
 import { Select } from 'baseui/select'
 import { ParagraphMedium } from 'baseui/typography'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useServer } from '..'
 import { useServerToggler } from '../../..'
