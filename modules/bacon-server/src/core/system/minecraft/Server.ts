@@ -122,7 +122,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         if (!fs.existsSync(java)) throw new Error(`Java not found at ${java}`)
 
         if (!fs.existsSync(this.dir)) {
-            this.emit('stdout', `[OHAGI] Creating server directory at ${this.dir}`)
+            this.emit('stdout', `[BACON] Creating server directory at ${this.dir}`)
             fs.mkdirSync(this.dir)
             fs.writeFileSync(path.join(this.dir, 'eula.txt'), 'eula=true')
         }
