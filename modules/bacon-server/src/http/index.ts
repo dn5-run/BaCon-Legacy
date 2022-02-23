@@ -14,7 +14,8 @@ import { Constants } from '../Constants'
 import { Core } from '../core'
 import { config } from '../core/Configuration'
 import { serverSoftManager } from '../core/system/Independent/ServerSoftManager'
-import { Dev } from '../dev'
+import { createViteDevServer } from '../dev/viteDevServer'
+import { createWebpackDevServer } from '../dev/webpackDevServer'
 import { SessionStore } from '../store/SessionStore'
 import { Logger } from '../util/Logger'
 import { Authenticator } from './Auth/Authenticator'
@@ -57,7 +58,12 @@ export class ApiServer {
         this.app.use('/api/server', this.minecraft())
         this.app.use('/api/auth', this.auth())
 
-        if (isDev) Dev.webpackDevServer(this.app)
+        this.initDev()
+    }
+
+    private async initDev() {
+        if (isDev) this.app.use((await createViteDevServer()).app)
+        // if (isDev) this.app.use(await createWebpackDevServer())
         if (!isDev) {
             this.app.get('/main.js', (req, res) => res.sendFile(path.join(Constants.WEB_DIR, 'main.js')))
             this.app.get('/', (req, res) => res.sendFile(path.join(Constants.WEB_DIR, 'index.html')))
