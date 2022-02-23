@@ -133,7 +133,7 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
         const customJVMArgs = this.customJVMArgs
             .split(' ')
             .filter((arg) => Object.keys(arg).length > 0 && !arg.match(/-Xmx|-Xms/))
-            .map((v) => `${v.trim}`)
+            .map((v) => `${v.trim()}`)
         const JVMArgs = [`-Xmx${this.maxMemory}M`, `-Xms${this.minMemory}M`, `-jar`, ...customJVMArgs, softPath]
 
         /** Create server arguments */
