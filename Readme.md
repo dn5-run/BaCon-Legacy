@@ -22,7 +22,7 @@ systemctl start bacon
 ```
 
 ## windows, macos
-ダウンロードしたバイナリを実行
+ダウンロードしたバイナリを実行  
 例)
 ```bash
 ./BaCon-macos
