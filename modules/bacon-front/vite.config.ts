@@ -8,6 +8,7 @@ export default defineConfig({
         alias: {
             'bacon-client': 'bacon-client/src/index.ts',
             'bacon-types': 'bacon-types/src/index.ts',
+            'attr-accept': '/src/replaces/attr-accept/index.ts'
         },
     },
 })
