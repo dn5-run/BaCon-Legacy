@@ -47,7 +47,7 @@ EOF
     echo "${lines}"
 }
 get_latest_release(){
-    echo "0.3"
+    echo "0.3.1"
 }
 release_url() {
     echo "https://github.com/dn5-run/BaCon/releases"
@@ -96,7 +96,10 @@ install(){
 
 if [ "$(check_root)" = "true" ]; then
     info "Start install..."
+    systemctl stop bacon
     install "$(get_latest_release)"
+    systemctl daemon-reload
+    systemctl start bacon
 else
     error "You must be root to run this script"
 fi
