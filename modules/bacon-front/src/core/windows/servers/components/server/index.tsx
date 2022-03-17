@@ -4,10 +4,10 @@ import { Tab, TabOverrides, Tabs } from 'baseui/tabs-motion'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import { useNotification } from '../../../../components/Notification'
-import { Config } from './Config'
-import { Console } from './Console'
-import { Controller } from './Controller'
-import { Plugins } from './Plugins'
+import { Config } from './config'
+import { Console } from './console'
+import { Controller } from './controller'
+import { Plugins } from './plugins'
 
 const tabOverrides: TabOverrides = {
   TabPanel: {

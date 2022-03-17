@@ -7,7 +7,7 @@ import { Table } from 'baseui/table-semantic'
 import { createRef, useEffect, useState } from 'react'
 
 import { Accordion, AccordionHeader, AccordionBody } from '../../../../components/Accordion'
-import { ServerContext } from '../Server'
+import { ServerContext } from '../server'
 import { Header } from './Header'
 
 const StyledCard = styled(Card, {

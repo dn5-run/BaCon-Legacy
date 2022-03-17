@@ -4,9 +4,9 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { styled } from 'styletron-react'
 
 import { useBaCon } from '../../../BaCon/BaConProvider'
-import { CreateServer } from './components/CreateServer'
-import { ServerFC } from './components/Server'
-import { ServerCard } from './components/ServerCard'
+import { CreateServer } from './components/create-server'
+import { ServerFC } from './components/server'
+import { ServerCard } from './components/server-card'
 
 const StyledFlexGrid = styled(FlexGrid, {
   margin: '20px',

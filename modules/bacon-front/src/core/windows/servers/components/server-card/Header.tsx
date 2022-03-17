@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { VscAdd, VscCircleLargeFilled, VscDebugRestart, VscDebugStart, VscDebugStop, VscRemove, VscTerminal } from 'react-icons/vsc'
 
 import { useServerToggler } from '../..'
-import { useServer } from '../Server'
+import { useServer } from '../server'
 
 export const Header: React.VFC<{
   refObj: React.RefObject<HTMLDivElement>

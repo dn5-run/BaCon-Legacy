@@ -3,7 +3,7 @@ import React from 'react'
 import { styled } from 'styletron-react'
 
 import { useServer } from '..'
-import { Status } from './Card/Status'
+import { Status } from './card/Status'
 
 const StyledFlexGrid = styled(FlexGrid, {
   marginTop: '10px',
