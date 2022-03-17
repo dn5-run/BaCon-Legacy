@@ -3,10 +3,10 @@ import { useStyletron } from 'baseui'
 import { HeadingLarge } from 'baseui/typography'
 import { useEffect, useState } from 'react'
 import { useServer } from '..'
-import { Downloader } from './Downloader'
+import { Downloader } from './downloader'
 
-import { PluginList } from './PluginList'
-import { Uploader } from './Uploader'
+import { PluginList } from './plugin-list'
+import { Uploader } from './uploader'
 
 export const Plugins: React.VFC = () => {
   const [css] = useStyletron()

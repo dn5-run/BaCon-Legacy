@@ -3,9 +3,9 @@ import path from 'path'
 
 import { Core } from '../..'
 import { isDev } from '../../..'
-import { Constants } from '../../../Constants'
-import { Permission } from './Permission'
-import { User } from './User'
+import { Constants } from '../../../constants'
+import { Permission } from './permission'
+import { User } from './user'
 
 export class UserManager {
     private readonly db = new JsonDB(path.join(Constants.DATA_PATH, 'database', 'user'), true, isDev)

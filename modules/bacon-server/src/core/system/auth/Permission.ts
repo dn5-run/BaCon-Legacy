@@ -1,5 +1,5 @@
-import { Role } from './Role'
-import { User } from './User'
+import { Role } from './role'
+import { User } from './user'
 
 export class Permission {
     public static fromArray(permissions: string[] | Permission[]): Permission[] {

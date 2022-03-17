@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import fetch from 'node-fetch'
 import path from 'path'
 
-import { statusEmitter } from './StatusEmitter'
+import { statusEmitter } from './status-emitter'
 
 class FileDownloader {
     public async download(url: string, name: string, dest: string) {

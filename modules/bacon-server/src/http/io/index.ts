@@ -2,13 +2,13 @@ import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketDa
 import { Server } from 'socket.io'
 
 import { Core } from '../../core'
-import { ActionManager } from '../../core/ActionManager'
-import { statusEmitter } from '../../core/system/independent/StatusEmitter'
-import { SessionStore } from '../../store/SessionStore'
-import { Logger } from '../../util/Logger'
-import { Authenticator } from '../auth/Authenticator'
+import { ActionManager } from '../../core/action-manager'
+import { statusEmitter } from '../../core/system/independent/status-emitter'
+import { SessionStore } from '../../store/session-store'
+import { Logger } from '../../util/logger'
+import { Authenticator } from '../auth/authenticator'
 import { SessionSocket } from '../types'
-import { SessionData } from './SessionData'
+import { SessionData } from './session-data'
 
 export class IO extends Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData> {
     public readonly authenticator: Authenticator

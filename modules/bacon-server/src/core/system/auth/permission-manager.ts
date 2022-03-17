@@ -1,5 +1,5 @@
-import { SYSTEM_PERMISSIONS } from '../SystemPermissions'
-import { Permission } from './Permission'
+import { SYSTEM_PERMISSIONS } from '../system-permissions'
+import { Permission } from './permission'
 
 export class PermissionManager {
     private readonly permissions: Permission[] = []

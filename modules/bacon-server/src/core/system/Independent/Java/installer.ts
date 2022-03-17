@@ -5,9 +5,9 @@ import os from 'os'
 import path from 'path'
 import tar from 'tar'
 
-import { Constants } from '../../../../Constants'
-import { Logger } from '../../../../util/Logger'
-import { statusEmitter } from '../StatusEmitter'
+import { Constants } from '../../../../constants'
+import { Logger } from '../../../../util/logger'
+import { statusEmitter } from '../status-emitter'
 import { JavaVersion, JreSHA256, VersionMeta } from './types'
 
 export class JavaInstaller {

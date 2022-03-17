@@ -1,6 +1,6 @@
 import { Core } from '../..'
-import { Permission } from './Permission'
-import { Role } from './Role'
+import { Permission } from './permission'
+import { Role } from './role'
 
 export class User {
     constructor(

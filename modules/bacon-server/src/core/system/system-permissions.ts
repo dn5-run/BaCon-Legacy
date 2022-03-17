@@ -1,4 +1,4 @@
-import { Permission } from './auth/Permission'
+import { Permission } from './auth/permission'
 
 export const SYSTEM_PERMISSIONS = {
     SYSTEM_USER_CREATE: new Permission('system.user.create'),

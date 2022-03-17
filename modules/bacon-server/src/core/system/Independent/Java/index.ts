@@ -2,7 +2,7 @@ import { spawnSync } from 'child_process'
 import fs from 'fs-extra'
 import path from 'path'
 
-import { Constants } from '../../../../Constants'
+import { Constants } from '../../../../constants'
 import { JavaInstaller } from './installer'
 import { JavaVersion } from './types'
 

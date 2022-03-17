@@ -1,8 +1,8 @@
 import { Actions, ArgumentTypes, ClientToServerEvents, MinecraftServerType, ServerStatusDetail, ServerToClientEvents } from 'bacon-types'
 import { io, Socket } from 'socket.io-client'
 
-import { ActionHandler } from './ActionHandler'
-import { Server } from './Server'
+import { ActionHandler } from './action-handler'
+import { Server } from './server'
 
 export class Client {
     public socket: Socket<ServerToClientEvents, ClientToServerEvents>
@@ -129,4 +129,4 @@ export class Client {
     }
 }
 
-export { Server } from './Server'
+export { Server } from './server'

@@ -4,15 +4,15 @@ import { EventEmitter } from 'stream'
 import StrictEventEmitter from 'strict-event-emitter-types'
 
 import { args, isDev } from '..'
-import { Constants } from '../Constants'
+import { Constants } from '../constants'
 import { ApiServer } from '../http'
-import { Level, Logger } from '../util/Logger'
-import { config } from './Configuration'
-import { PermissionManager } from './system/auth/PermissionManager'
-import { RoleManager } from './system/auth/RoleManager'
-import { UserManager } from './system/auth/UserManager'
-import { statusEmitter } from './system/independent/StatusEmitter'
-import { ServerManager } from './system/minecraft/ServerManager'
+import { Level, Logger } from '../util/logger'
+import { config } from './configuration'
+import { PermissionManager } from './system/auth/permission-manager'
+import { RoleManager } from './system/auth/role-manager'
+import { UserManager } from './system/auth/user-manager'
+import { statusEmitter } from './system/independent/status-emitter'
+import { ServerManager } from './system/minecraft/server-manager'
 
 type Events = {
     'status-update': typeof ServerStatusDetail[number]

@@ -4,10 +4,10 @@ import path from 'path'
 
 import { Core } from '../..'
 import { args, isDev } from '../../..'
-import { Constants } from '../../../Constants'
+import { Constants } from '../../../constants'
 import { javaManager } from '../independent/java'
-import { serverSoftManager } from '../independent/ServerSoftManager'
-import { Server } from './Server'
+import { serverSoftManager } from '../independent/server-soft-manager'
+import { Server } from './server'
 
 export class ServerManager {
     private readonly db = new JsonDB(path.join(Constants.DATA_PATH, 'database', 'server'), true, isDev)

@@ -2,9 +2,9 @@ import { Command } from 'commander'
 import fs from 'fs-extra'
 import path from 'path'
 
-import { Constants } from './Constants'
+import { Constants } from './constants'
 import { Core } from './core'
-import { Logger } from './util/Logger'
+import { Logger } from './util/logger'
 
 export const isDev = process.env.NODE_ENV === 'development'
 

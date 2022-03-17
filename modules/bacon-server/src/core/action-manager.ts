@@ -1,7 +1,7 @@
 import { ActionResponse, Actions, ArgumentTypes } from 'bacon-types'
 
-import { Action } from './Action'
-import { User } from './system/auth/User'
+import { Action } from './action'
+import { User } from './system/auth/user'
 import { SYSTEM_ACTIONS } from './system/system-actions'
 
 export class ActionManager {

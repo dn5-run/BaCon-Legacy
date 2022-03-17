@@ -1,4 +1,4 @@
-import { ArgumentTypes } from '../Util'
+import { ArgumentTypes } from '../util'
 import { ActionResponse, Actions, SystemStatusData } from '../core'
 
 export interface ServerToClientEvents {

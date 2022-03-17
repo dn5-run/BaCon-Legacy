@@ -8,7 +8,7 @@ import { createRef, useEffect, useState } from 'react'
 
 import { Accordion, AccordionHeader, AccordionBody } from '../../../../components/Accordion'
 import { ServerContext } from '../server'
-import { Header } from './Header'
+import { Header } from './header'
 
 const StyledCard = styled(Card, {
   overflow: 'hidden',

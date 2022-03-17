@@ -1,4 +1,4 @@
-import { User } from '../../core/system/auth/User'
+import { User } from '../../core/system/auth/user'
 import { SocketType } from '../types'
 
 export class SessionData {

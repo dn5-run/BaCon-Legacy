@@ -1,6 +1,6 @@
-export * from './User'
-export * from './Action'
-export * from './Minecraft'
+export * from './user'
+export * from './action'
+export * from './minecraft'
 
 export const ServerStatusDetail = ['offline', 'starting', 'initialize-java', 'startup-server', 'online'] as const
 

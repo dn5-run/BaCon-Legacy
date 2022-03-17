@@ -3,9 +3,9 @@ import fs from 'fs-extra'
 import fetch from 'node-fetch'
 import path from 'path'
 
-import { Constants } from '../../../Constants'
-import { fileDownloader } from './FileDownloader'
-import { statusEmitter } from './StatusEmitter'
+import { Constants } from '../../../constants'
+import { fileDownloader } from './file-downloader'
+import { statusEmitter } from './status-emitter'
 
 class ServerSoftManager {
     private readonly directory = path.join(Constants.DATA_PATH, 'soft')

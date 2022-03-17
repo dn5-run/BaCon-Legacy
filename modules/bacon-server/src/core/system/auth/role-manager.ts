@@ -3,9 +3,9 @@ import path from 'path'
 
 import { Core } from '../..'
 import { isDev } from '../../..'
-import { Constants } from '../../../Constants'
-import { Permission } from './Permission'
-import { Role } from './Role'
+import { Constants } from '../../../constants'
+import { Permission } from './permission'
+import { Role } from './role'
 
 export class RoleManager {
     private readonly db = new JsonDB(path.join(Constants.DATA_PATH, 'database', 'role'), true, isDev)

@@ -1,5 +1,5 @@
-import { SessionData } from '../http/io/SessionData'
-import { BaseStore } from './BaseStore'
+import { SessionData } from '../http/io/session-data'
+import { BaseStore } from './base-store'
 
 export const SessionStore = new (class implements BaseStore<SessionData> {
     public readonly data: SessionData[] = []
