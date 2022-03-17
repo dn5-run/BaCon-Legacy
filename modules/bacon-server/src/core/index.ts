@@ -1,18 +1,18 @@
+import { Constants } from '@/constants'
+import { ApiServer } from '@/http'
+import { Level, Logger } from '@/utils/logger'
 import { ServerStatusDetail } from 'bacon-types'
 import fs from 'fs-extra'
 import { EventEmitter } from 'stream'
 import StrictEventEmitter from 'strict-event-emitter-types'
 
 import { args, isDev } from '..'
-import { Constants } from '../constants'
-import { ApiServer } from '../http'
-import { Level, Logger } from '../util/logger'
 import { config } from './configuration'
-import { PermissionManager } from './system/auth/permission-manager'
-import { RoleManager } from './system/auth/role-manager'
-import { UserManager } from './system/auth/user-manager'
-import { statusEmitter } from './system/independent/status-emitter'
-import { ServerManager } from './system/minecraft/server-manager'
+import { PermissionManager } from './futures/auth/permission-manager'
+import { RoleManager } from './futures/auth/role-manager'
+import { UserManager } from './futures/auth/user-manager'
+import { ServerManager } from './futures/minecraft/server-manager'
+import { statusEmitter } from './futures/status-emitter'
 
 type Events = {
     'status-update': typeof ServerStatusDetail[number]

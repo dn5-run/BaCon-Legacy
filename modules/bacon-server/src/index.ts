@@ -4,7 +4,7 @@ import path from 'path'
 
 import { Constants } from './constants'
 import { Core } from './core'
-import { Logger } from './util/logger'
+import { Logger } from './utils/logger'
 
 export const isDev = process.env.NODE_ENV === 'development'
 

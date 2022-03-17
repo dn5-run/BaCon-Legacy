@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom'
 
-import { client } from './BaCon/BaConProvider'
-import { _App } from './core/_App'
+import { _App } from './_app'
+import { client } from './futures/bacon/bacon-provider'
 
 export class Main {
   constructor() {

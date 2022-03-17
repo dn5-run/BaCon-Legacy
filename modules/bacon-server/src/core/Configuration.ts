@@ -1,9 +1,8 @@
+import { Constants } from '@/constants'
 import { CorsOptions } from 'cors'
 import crypto from 'crypto'
 import fs from 'fs-extra'
 import path from 'path'
-
-import { Constants } from '../constants'
 
 class Configuration {
     public port = 41180
