@@ -5,8 +5,8 @@ import path from 'path'
 import { Core } from '../..'
 import { args, isDev } from '../../..'
 import { Constants } from '../../../Constants'
-import { javaManager } from '../Independent/Java'
-import { serverSoftManager } from '../Independent/ServerSoftManager'
+import { javaManager } from '../independent/java'
+import { serverSoftManager } from '../independent/ServerSoftManager'
 import { Server } from './Server'
 
 export class ServerManager {

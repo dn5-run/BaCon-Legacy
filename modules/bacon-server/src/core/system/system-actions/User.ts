@@ -1,6 +1,6 @@
 import { Core } from '../..'
 import { Action } from '../../Action'
-import { Permission } from '../Auth/Permission'
+import { Permission } from '../auth/Permission'
 import { SYSTEM_PERMISSIONS } from '../SystemPermissions'
 
 export const UserActions = [

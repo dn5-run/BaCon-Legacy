@@ -3,10 +3,10 @@ import { Server } from 'socket.io'
 
 import { Core } from '../../core'
 import { ActionManager } from '../../core/ActionManager'
-import { statusEmitter } from '../../core/system/Independent/StatusEmitter'
+import { statusEmitter } from '../../core/system/independent/StatusEmitter'
 import { SessionStore } from '../../store/SessionStore'
 import { Logger } from '../../util/Logger'
-import { Authenticator } from '../Auth/Authenticator'
+import { Authenticator } from '../auth/Authenticator'
 import { SessionSocket } from '../types'
 import { SessionData } from './SessionData'
 

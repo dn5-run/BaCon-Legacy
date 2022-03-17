@@ -1,6 +1,6 @@
 import { Core } from '../..'
 import { Action } from '../../Action'
-import { serverSoftManager } from '../Independent/ServerSoftManager'
+import { serverSoftManager } from '../independent/ServerSoftManager'
 import { SYSTEM_PERMISSIONS } from '../SystemPermissions'
 
 export const MinecraftActions = [
