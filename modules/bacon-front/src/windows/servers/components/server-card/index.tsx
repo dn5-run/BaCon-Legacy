@@ -5,9 +5,9 @@ import { styled } from 'baseui'
 import { useStyletron } from 'baseui'
 import { Card } from 'baseui/card'
 import { Table } from 'baseui/table-semantic'
-import { createRef, useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { ServerContext } from '../server'
+import { ServerContext } from '../../../server'
 import { Header } from './header'
 
 const StyledCard = styled(Card, {
@@ -16,8 +16,8 @@ const StyledCard = styled(Card, {
 })
 
 export const ServerCard: React.VFC<{ server: Server }> = ({ server }) => {
-  const header = createRef<HTMLDivElement>()
-  const wrapper = createRef<HTMLDivElement>()
+  const header = useRef<HTMLDivElement>(null)
+  const wrapper = useRef<HTMLDivElement>(null)
 
   const [css] = useStyletron()
   const [maxHeight, setMaxHeight] = useState('58px')

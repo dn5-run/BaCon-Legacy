@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "format": "yarn prettier:write",
-    "prettier:write": "prettier --write './modules/**/src/**/*.{ts,tsx}'",
+    "prettier:write": "prettier --write './modules/**/*.{ts,tsx,json}'",
     "start": "yarn build --no-pack && node dist/server",
     "build": "ts-node ./run.ts build"
   },

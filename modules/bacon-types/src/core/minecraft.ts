@@ -140,3 +140,13 @@ export type ServerSoft = {
     name: string
     size: number
 }
+
+export type FileStat = {
+    name: string
+    path: string
+    size: number
+    isBinary: boolean
+    isDirectory: boolean
+    isFile: boolean
+    children?: FileStat[]
+}

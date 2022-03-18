@@ -4,10 +4,11 @@ import { useStyletron } from 'baseui'
 import { Tab, TabOverrides, Tabs } from 'baseui/tabs-motion'
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import { Config } from './config'
-import { Console } from './console'
-import { Controller } from './controller'
-import { Plugins } from './plugins'
+import { Config } from './tabs/config'
+import { Console } from './tabs/console'
+import { Controller } from './tabs/controller'
+import { File } from './tabs/file'
+import { Plugins } from './tabs/plugins'
 
 const tabOverrides: TabOverrides = {
   TabPanel: {
@@ -79,7 +80,7 @@ export const ServerFC: React.VFC<{ server: Server }> = ({ server }) => {
             },
           }}
         >
-          <Tab title="Console" overrides={tabOverrides}>
+          <Tab title="console" overrides={tabOverrides}>
             <Console />
           </Tab>
           <Tab title="config" overrides={tabOverrides}>
@@ -87,6 +88,9 @@ export const ServerFC: React.VFC<{ server: Server }> = ({ server }) => {
           </Tab>
           <Tab title="plugins" overrides={tabOverrides}>
             <Plugins />
+          </Tab>
+          <Tab title="file" overrides={tabOverrides}>
+            <File />
           </Tab>
         </Tabs>
       </div>

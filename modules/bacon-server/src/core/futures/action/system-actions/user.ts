@@ -1,8 +1,8 @@
 import { Core } from '@/core'
-import { Action } from '@/core/action'
+import { Action } from '@/core/futures/action/action'
 
-import { Permission } from '../auth/permission'
-import { SYSTEM_PERMISSIONS } from '../system-permissions'
+import { Permission } from '../../auth/permission'
+import { SYSTEM_PERMISSIONS } from '../../system-permissions'
 
 export const UserActions = [
     new Action('USER_CREATE', SYSTEM_PERMISSIONS.SYSTEM_USER_CREATE, async (sender, username, password, permissions, roles) => {

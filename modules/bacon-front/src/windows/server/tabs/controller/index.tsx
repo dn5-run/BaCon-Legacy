@@ -1,11 +1,11 @@
+import { useServerToggler } from '@/windows/servers'
 import { useStyletron } from 'baseui'
 import { Button } from 'baseui/button'
 import { ButtonGroup } from 'baseui/button-group'
 import { useState } from 'react'
 import { VscArrowLeft } from 'react-icons/vsc'
 
-import { useServer } from '..'
-import { useServerToggler } from '../../..'
+import { useServer } from '../..'
 
 export const Controller: React.VFC = () => {
   const [server, startServer, stopServer] = useServer()

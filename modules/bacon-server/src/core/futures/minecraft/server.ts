@@ -1,10 +1,11 @@
 import { Constants } from '@/constants'
 import { javaManager } from '@/core/utils/java'
 import { Logger } from '@/utils/logger'
-import { MinecraftServerType, ServerProperties, ServerSoft, ServerStatus, ServerType } from 'bacon-types'
+import { FileStat, MinecraftServerType, ServerProperties, ServerSoft, ServerStatus, ServerType } from 'bacon-types'
 import { ChildProcess, spawn } from 'child_process'
 import EventEmitter from 'events'
 import fs from 'fs-extra'
+import { isBinaryFileSync } from 'isbinaryfile'
 import * as mcutil from 'minecraft-server-util'
 import os from 'os'
 import path from 'path'
@@ -248,5 +249,58 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
     public deletePlugin(fileName: string) {
         if (!fs.existsSync(path.join(this.dir, 'plugins', fileName))) throw new Error('Plugin not found')
         fs.unlinkSync(path.join(this.dir, 'plugins', fileName))
+    }
+
+    public getFiles(): FileStat {
+        const getChildren = (dir: string): FileStat[] => {
+            const files = fs.readdirSync(dir)
+            return files.map((file) => {
+                const filePath = path.join(dir, file)
+                const stat = fs.statSync(filePath)
+                return {
+                    name: file,
+                    size: stat.size,
+                    path: path.relative(this.dir, filePath),
+                    isBinary: stat.isFile() && isBinaryFileSync(filePath),
+                    isDirectory: stat.isDirectory(),
+                    isFile: stat.isFile(),
+                    children: stat.isDirectory() ? getChildren(filePath) : undefined,
+                }
+            })
+        }
+        const root = fs.statSync(this.dir)
+        return {
+            name: path.basename(this.dir),
+            size: root.size,
+            path: './',
+            isBinary: false,
+            isDirectory: true,
+            isFile: false,
+            children: getChildren(this.dir),
+        }
+    }
+
+    public getFile(filepath: string) {
+        filepath = path.join(this.dir, filepath)
+        if (!fs.existsSync(filepath)) throw new Error('File not found')
+        return fs.readFileSync(filepath).toString()
+    }
+
+    public saveFile(filepath: string, data: string) {
+        filepath = path.join(this.dir, filepath)
+        console.log(filepath, data)
+        fs.writeFileSync(filepath, data)
+    }
+
+    public deleteFile(filepath: string) {
+        filepath = path.join(this.dir, filepath)
+        if (!fs.existsSync(filepath)) throw new Error('File not found')
+        fs.unlinkSync(filepath)
+    }
+
+    public renameFile(filepath: string, newName: string) {
+        filepath = path.join(this.dir, filepath)
+        if (!fs.existsSync(filepath)) throw new Error('File not found')
+        fs.renameSync(filepath, path.join(path.dirname(filepath), newName))
     }
 }

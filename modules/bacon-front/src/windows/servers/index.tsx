@@ -4,8 +4,8 @@ import { FlexGrid, FlexGridItem } from 'baseui/flex-grid'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { styled } from 'styletron-react'
 
+import { ServerFC } from '../server'
 import { CreateServer } from './components/create-server'
-import { ServerFC } from './components/server'
 import { ServerCard } from './components/server-card'
 
 const StyledFlexGrid = styled(FlexGrid, {

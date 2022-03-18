@@ -1,6 +1,6 @@
-import { useBaCon } from '@/futures/bacon/bacon-provider'
 import { useConfirmation } from '@/components/confirmation'
 import { useNotification } from '@/components/notification'
+import { useBaCon } from '@/futures/bacon/bacon-provider'
 import { ServerSoft, ServerType } from 'bacon-types'
 import { styled } from 'baseui'
 import { Button } from 'baseui/button'
@@ -11,8 +11,8 @@ import { Select } from 'baseui/select'
 import { ParagraphMedium } from 'baseui/typography'
 import { useEffect, useState } from 'react'
 
-import { useServer } from '..'
-import { useServerToggler } from '../../..'
+import { useServer } from '../..'
+import { useServerToggler } from '../../../servers'
 
 const Sep = styled('div', {
   width: '100%',

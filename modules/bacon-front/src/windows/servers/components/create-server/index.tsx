@@ -1,6 +1,6 @@
-import { useBaCon } from '@/futures/bacon/bacon-provider'
 import { Accordion, AccordionBody, AccordionHeader } from '@/components/accordion'
 import { useNotification } from '@/components/notification'
+import { useBaCon } from '@/futures/bacon/bacon-provider'
 import { MinecraftServerType, ServerSoft, ServerType } from 'bacon-types'
 import { styled, useStyletron } from 'baseui'
 import { Button } from 'baseui/button'

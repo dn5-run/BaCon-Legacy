@@ -1,5 +1,5 @@
 import { Core } from '@/core'
-import { ActionManager } from '@/core/action-manager'
+import { ActionManager } from '@/core/futures/action/action-manager'
 import { statusEmitter } from '@/core/futures/status-emitter'
 import { SessionStore } from '@/http/futures/store/session-store'
 import { SessionSocket } from '@/http/types'

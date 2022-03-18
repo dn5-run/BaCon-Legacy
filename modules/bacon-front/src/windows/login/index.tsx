@@ -1,5 +1,5 @@
-import { useBaCon } from '@/futures/bacon/bacon-provider'
 import { useNotification } from '@/components/notification'
+import { useBaCon } from '@/futures/bacon/bacon-provider'
 import { styled } from 'baseui'
 import { Button } from 'baseui/button'
 import { Input } from 'baseui/input'

@@ -1,11 +1,11 @@
+import { useNotification } from '@/components/notification'
 import { useStyletron } from 'baseui'
 import { Button } from 'baseui/button'
 import { Input } from 'baseui/input'
 import { HeadingMedium, HeadingXSmall, ParagraphLarge, ParagraphMedium } from 'baseui/typography'
 import { useState } from 'react'
-import { useServer } from '..'
 
-import { useNotification } from '@/components/notification'
+import { useServer } from '../..'
 import { DownloadTask } from './download-task'
 
 export const Downloader: React.VFC<{

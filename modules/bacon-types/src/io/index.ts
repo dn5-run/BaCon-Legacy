@@ -1,5 +1,5 @@
-import { ArgumentTypes } from '../util'
 import { ActionResponse, Actions, SystemStatusData } from '../core'
+import { ArgumentTypes } from '../util'
 
 export interface ServerToClientEvents {
     login: (token?: string) => void

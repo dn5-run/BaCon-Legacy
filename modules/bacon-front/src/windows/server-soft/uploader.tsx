@@ -19,13 +19,13 @@ export const Uploader: React.VFC<{
     }
 
     for (const v of files) {
-      if(!v.name.endsWith('.jar')) {
+      if (!v.name.endsWith('.jar')) {
         toaster.negative(`${v.name} is not a valid plugin`, {})
         continue
       }
       formData.append('files', v)
     }
-    if(formData.getAll('files').length === 0) {
+    if (formData.getAll('files').length === 0) {
       setIsUploading(false)
       return
     }

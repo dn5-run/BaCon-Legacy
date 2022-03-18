@@ -1,13 +1,13 @@
 import { useStyletron } from 'baseui'
-import React from 'react'
-import { createRef, isValidElement, useEffect, useState } from 'react'
+import React, { useRef } from 'react'
+import { isValidElement, useEffect, useState } from 'react'
 
 import { AccordionBody } from './accordion-body'
 import { AccordionHeader } from './accordion-header'
 
 export const Accordion: React.FC<{ defaultHeight?: number; isOpen: boolean }> = ({ children, defaultHeight, isOpen }) => {
-  const header = createRef<HTMLDivElement>()
-  const wrapper = createRef<HTMLDivElement>()
+  const header = useRef<HTMLDivElement>(null)
+  const wrapper = useRef<HTMLDivElement>(null)
 
   const [css] = useStyletron()
   const [maxHeight, setMaxHeight] = useState(`${defaultHeight ?? 58}px`)

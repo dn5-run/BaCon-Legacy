@@ -1,9 +1,8 @@
 import { PluginType } from 'bacon-types'
 import { useStyletron } from 'baseui'
-import { HeadingLarge } from 'baseui/typography'
 import { useEffect, useState } from 'react'
 
-import { useServer } from '..'
+import { useServer } from '../..'
 import { Downloader } from './downloader'
 import { PluginList } from './plugin-list'
 import { Uploader } from './uploader'
@@ -11,7 +10,7 @@ import { Uploader } from './uploader'
 export const Plugins: React.VFC = () => {
   const [css] = useStyletron()
   const [server] = useServer()
-  const [plugins, setPlugins] = useState<PluginType[] | null>(null)
+  const [plugins, setPlugins] = useState<PluginType[]>([])
 
   const updatePlugins = async () => {
     try {
