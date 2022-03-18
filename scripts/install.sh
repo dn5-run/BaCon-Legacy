@@ -47,7 +47,7 @@ EOF
     echo "${lines}"
 }
 get_latest_release(){
-    echo "0.3.1"
+    echo "0.3.2"
 }
 release_url() {
     echo "https://github.com/dn5-run/BaCon/releases"
