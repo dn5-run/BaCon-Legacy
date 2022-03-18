@@ -40,8 +40,8 @@ program
         await buildTasks('./modules/bacon-types', 'tsc', 'dist', options.clean)
         await buildTasks('./modules/bacon-client', 'tsc', 'dist', options.clean)
         const tasks: Promise<void>[] = []
-        tasks.push(buildTasks('./modules/bacon-server', 'tsc --outDir ../../dist/server', '../../dist/server', options.clean))
-        tasks.push(buildTasks('./modules/bacon-front', 'vite build --outDir ../../dist/web', '../../dist/server', options.clean))
+        tasks.push(buildTasks('./modules/bacon-server', 'build', '../../dist/server', options.clean))
+        tasks.push(buildTasks('./modules/bacon-front', 'vite build --outDir ../../dist/web', '../../dist/web', options.clean))
         await Promise.all(tasks)
         options.pack && execSync(`yarn pkg .`, { stdio: 'inherit' })
     })

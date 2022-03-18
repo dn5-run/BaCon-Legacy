@@ -2,7 +2,7 @@
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "dist",
+    "outDir": "../../dist/server",
     "sourceMap": true,
     "declaration": true,
     "paths": {
@@ -13,5 +13,8 @@
   },
   "include": [
     "src/**/*"
+  ],
+  "exclude": [
+    "build.ts"
   ]
 }
