@@ -5,7 +5,7 @@ build({
     outdir: '../../dist/server',
     bundle: true,
     platform: 'node',
-    external: ['esbuild', 'fsevents', 'vite', 'rollup'],
+    external: ['esbuild', 'fsevents', 'vite', 'rollup', 'pidusage'],
     watch: false,
     sourcemap: true,
 })
