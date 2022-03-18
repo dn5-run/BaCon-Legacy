@@ -1,8 +1,8 @@
 import { ActionResponse, Actions, ArgumentTypes } from 'bacon-types'
 
+import { User } from '../auth/user'
 import { Action } from './action'
-import { User } from './futures/auth/user'
-import { SYSTEM_ACTIONS } from './futures/system-actions'
+import { SYSTEM_ACTIONS } from './system-actions'
 
 export class ActionManager {
     private readonly ActionList: Action[] = []

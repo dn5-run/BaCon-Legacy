@@ -124,4 +124,20 @@ export class Server extends (EventEmitter as new () => StrictEventEmitter<EventE
     public deletePlugin(fileName: string) {
         return this.client.action('MINECRAFT_SERVER_DELETE_PLUGIN', this.name, fileName)
     }
+
+    public getFiles() {
+        return this.client.action('MINECRAFT_SERVER_FILE_ALL', this.name)
+    }
+
+    public getFile(fileName: string) {
+        return this.client.action('MINECRAFT_SERVER_FILE_GET', this.name, fileName)
+    }
+
+    public saveFile(fileName: string, content: string) {
+        return this.client.action('MINECRAFT_SERVER_FILE_SAVE', this.name, fileName, content)
+    }
+
+    public deleteFile(fileName: string) {
+        return this.client.action('MINECRAFT_SERVER_FILE_DELETE', this.name, fileName)
+    }
 }

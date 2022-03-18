@@ -4,7 +4,7 @@ import { toaster } from 'baseui/toast'
 import { H2 } from 'baseui/typography'
 import { useState } from 'react'
 
-import { useServer } from '..'
+import { useServer } from '../..'
 
 export const Uploader: React.VFC<{
   onUploaded?: (result: boolean) => void

@@ -7,10 +7,10 @@ import { StyledLink } from 'baseui/link'
 import { StyledSpinnerNext } from 'baseui/spinner'
 import { StyledTable, StyledHeadCell, StyledBodyCell } from 'baseui/table-grid'
 import { HeadingLarge } from 'baseui/typography'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { VscTrash } from 'react-icons/vsc'
 
-import { useServer } from '..'
+import { useServer } from '../..'
 
 const CenteredBodyCell = withStyle(StyledBodyCell, {
   display: 'flex',

@@ -6,15 +6,9 @@
     "sourceMap": true,
     "declaration": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "build.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["build.ts"]
 }

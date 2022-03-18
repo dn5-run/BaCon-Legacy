@@ -1,10 +1,9 @@
+import { useBaCon } from '@/futures/bacon/bacon-provider'
 import { ServerStatusDetail } from 'bacon-types'
 import { useStyletron } from 'baseui'
 import { Spinner } from 'baseui/spinner'
 import { H1, Paragraph1 } from 'baseui/typography'
 import { useEffect, useState } from 'react'
-
-import { useBaCon } from '@/futures/bacon/bacon-provider'
 
 export const Loading: React.VFC<{
   onOnline?: () => void

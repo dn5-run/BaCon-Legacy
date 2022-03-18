@@ -1,7 +1,7 @@
 import { Actions, ArgumentTypes } from 'bacon-types'
 
-import { Permission } from './futures/auth/permission'
-import { User } from './futures/auth/user'
+import { Permission } from '../auth/permission'
+import { User } from '../auth/user'
 
 export class Action<
     ActionName extends keyof Actions = keyof Actions,

@@ -1,4 +1,4 @@
-import { Permission } from '../futures/auth/permission'
+import { Permission } from './auth/permission'
 
 export const SYSTEM_PERMISSIONS = {
     SYSTEM_USER_CREATE: new Permission('system.user.create'),
@@ -30,6 +30,11 @@ export const SYSTEM_PERMISSIONS = {
     SYSTEM_MINECRAFT_SERVER_DOWNLOAD_PLUGIN: new Permission('system.minecraft.server.download.plugin'),
     SYSTEM_MINECRAFT_SERVER_GET_PLUGINS: new Permission('system.minecraft.server.get.plugins'),
     SYSTEM_MINECRAFT_SERVER_REMOVE_PLUGIN: new Permission('system.minecraft.server.remove.plugin'),
+    SYSTEM_MINECRAFT_SERVER_FILE_ALL: new Permission('system.minecraft.server.file.all'),
+    SYSTEM_MINECRAFT_SERVER_FILE_GET: new Permission('system.minecraft.server.file.get'),
+    SYSTEM_MINECRAFT_SERVER_FILE_SAVE: new Permission('system.minecraft.server.file.save'),
+    SYSTEM_MINECRAFT_SERVER_FILE_DELETE: new Permission('system.minecraft.server.file.delete'),
+    SYSTEM_MINECRAFT_SERVER_FILE_RENAME: new Permission('system.minecraft.server.file.rename'),
 
     SYSTEM_MINECRAFT_SOFT_DOWNLOAD: new Permission('system.minecraft.soft.download'),
     SYSTEM_MINECRAFT_SOFT_DELETE: new Permission('system.minecraft.soft.delete'),

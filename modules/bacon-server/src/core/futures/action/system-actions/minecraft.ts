@@ -1,8 +1,9 @@
 import { Core } from '@/core'
-import { Action } from '@/core/action'
+import { Action } from '@/core/futures/action/action'
+import { FileStat } from 'bacon-types'
 
-import { serverSoftManager } from '../minecraft/server-soft-manager'
-import { SYSTEM_PERMISSIONS } from '../system-permissions'
+import { serverSoftManager } from '../../minecraft/server-soft-manager'
+import { SYSTEM_PERMISSIONS } from '../../system-permissions'
 
 export const MinecraftActions = [
     /**
@@ -105,5 +106,37 @@ export const MinecraftActions = [
         const server = serverManager.getServer(name)
         server?.deletePlugin(fileName)
         return 'Plugin deleted'
+    }),
+
+    /**
+     * File system actions
+     */
+    new Action('MINECRAFT_SERVER_FILE_ALL', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SERVER_FILE_ALL, (sender, name) => {
+        const { serverManager } = Core.instance
+        const server = serverManager.getServer(name)
+        return server!.getFiles()
+    }),
+    new Action('MINECRAFT_SERVER_FILE_GET', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SERVER_FILE_GET, (sender, name, filename) => {
+        const { serverManager } = Core.instance
+        const server = serverManager.getServer(name)
+        return server?.getFile(filename)
+    }),
+    new Action('MINECRAFT_SERVER_FILE_SAVE', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SERVER_FILE_SAVE, (sender, name, filename, content) => {
+        const { serverManager } = Core.instance
+        const server = serverManager.getServer(name)
+        server?.saveFile(filename, content)
+        return 'File saved'
+    }),
+    new Action('MINECRAFT_SERVER_FILE_DELETE', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SERVER_FILE_DELETE, (sender, name, filename) => {
+        const { serverManager } = Core.instance
+        const server = serverManager.getServer(name)
+        server?.deleteFile(filename)
+        return 'File deleted'
+    }),
+    new Action('MINECRAFT_SERVER_FILE_RENAME', SYSTEM_PERMISSIONS.SYSTEM_MINECRAFT_SERVER_FILE_RENAME, (sender, name, filename, newName) => {
+        const { serverManager } = Core.instance
+        const server = serverManager.getServer(name)
+        server?.renameFile(filename, newName)
+        return 'File renamed'
     }),
 ]

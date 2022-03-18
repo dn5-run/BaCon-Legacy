@@ -4,7 +4,7 @@ import { Input } from 'baseui/input'
 import { ParagraphSmall } from 'baseui/typography'
 import { useEffect, useRef, useState } from 'react'
 
-import { useServer } from '..'
+import { useServer } from '../..'
 
 const ConsoleContainer = styled('div', ({ $theme }) => ({
   backgroundColor: $theme.colors.backgroundAlt,

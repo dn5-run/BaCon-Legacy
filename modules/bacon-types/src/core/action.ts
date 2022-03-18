@@ -1,4 +1,6 @@
-import { MinecraftServerType, PluginType, ServerProperties, ServerSoft, ServerStatus } from './minecraft'
+import { Stats } from 'fs'
+
+import { FileStat, MinecraftServerType, PluginType, ServerProperties, ServerSoft, ServerStatus } from './minecraft'
 
 export interface Actions {
     USER_CREATE: (username: string, password: string, permissions: string[], roles?: string[]) => string
@@ -27,6 +29,11 @@ export interface Actions {
     MINECRAFT_SERVER_DOWNLOAD_PLUGIN: (servername: string, url: string, name: string) => string
     MINECRAFT_SERVER_GET_PLUGINS: (name: string) => PluginType[]
     MINECRAFT_SERVER_DELETE_PLUGIN: (name: string, fileName: string) => string
+    MINECRAFT_SERVER_FILE_ALL: (name: string) => FileStat
+    MINECRAFT_SERVER_FILE_GET: (name: string, fileName: string) => string
+    MINECRAFT_SERVER_FILE_SAVE: (name: string, fileName: string, content: string) => string
+    MINECRAFT_SERVER_FILE_DELETE: (name: string, fileName: string) => string
+    MINECRAFT_SERVER_FILE_RENAME: (name: string, oldFileName: string, newFileName: string) => string
 
     MINECRAFT_SOFT_DOWNLOAD: (url: string, name: string) => string
     MINECRAFT_SOFT_DELETE: (name: string) => string
