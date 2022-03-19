@@ -30,4 +30,4 @@ systemctl start bacon
 
 ## アクセス方法
 デフォルトでは`http://localhost:41180`にアクセスすることで利用できます。  
-ユーザー名、パスワードはデフォルトだと`admin`, `password`です。
+ユーザー名、パスワードはデフォルトだと`root`, `password`です。
